@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
-import React from "react";
+import React, { useState } from "react";
 
 const animationProps = {
     initial: { "--x": "100%", scale: 0.8 },
@@ -34,10 +34,12 @@ export const ShinyButton = React.forwardRef<
     HTMLButtonElement,
     ShinyButtonProps
 >(({ children, className, ...props }, ref) => {
+    const [isHovered, setIsHovered] = useState(false);
+
     return (
         <motion.div
             className={cn(
-                "relative rounded-lg px-6 py-2 font-medium backdrop-blur-xl transition-shadow duration-300 ease-in-out hover:shadow cursor-pointer inline-block",
+                "relative rounded-lg px-6 py-2 font-medium backdrop-blur-xl transition-shadow duration-300 ease-in-out hover:shadow cursor-pointer inline-block overflow-hidden",
                 // Light theme styling
                 "bg-background border border-border",
                 // Dark theme styling
@@ -45,10 +47,114 @@ export const ShinyButton = React.forwardRef<
                 className,
             )}
             {...animationProps}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
         >
+            {/* Snake-like border animation */}
+            <div className="absolute inset-0 pointer-events-none">
+                {/* Top border segment */}
+                <motion.div
+                    className="absolute top-0 left-0 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent"
+                    style={{
+                        width: "40%",
+                        opacity: isHovered ? 2 : 0.6,
+                    }}
+                    initial={{ x: "-100%" }}
+                    animate={{ x: "400%" }}
+                    transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        repeatType: "loop",
+                        ease: "linear",
+                    }}
+                />
+
+                {/* Right border segment */}
+                <motion.div
+                    className="absolute top-0 right-0 w-[1px] bg-gradient-to-b from-transparent via-primary to-transparent"
+                    style={{
+                        height: "40%",
+                        opacity: isHovered ? 2 : 0.6,
+                    }}
+                    initial={{ y: "-100%" }}
+                    animate={{ y: "400%" }}
+                    transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        repeatType: "loop",
+                        ease: "linear",
+                        delay: 0.5,
+                    }}
+                />
+
+                {/* Bottom border segment */}
+                <motion.div
+                    className="absolute bottom-0 right-0 h-[1px] bg-gradient-to-l from-transparent via-primary to-transparent"
+                    style={{
+                        width: "40%",
+                        opacity: isHovered ? 2 : 0.6,
+                    }}
+                    initial={{ x: "100%" }}
+                    animate={{ x: "-400%" }}
+                    transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        repeatType: "loop",
+                        ease: "linear",
+                        delay: 1,
+                    }}
+                />
+
+                {/* Left border segment */}
+                <motion.div
+                    className="absolute bottom-0 left-0 w-[1px] bg-gradient-to-t from-transparent via-primary to-transparent"
+                    style={{
+                        height: "40%",
+                        opacity: isHovered ? 2 : 0.6,
+                    }}
+                    initial={{ y: "100%" }}
+                    animate={{ y: "-400%" }}
+                    transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        repeatType: "loop",
+                        ease: "linear",
+                        delay: 1.5,
+                    }}
+                />
+
+                {/* Additional corner highlights */}
+                <motion.div
+                    className="absolute inset-0 rounded-lg border border-transparent"
+                    style={{
+                        background: `linear-gradient(90deg, 
+                            transparent 0%, 
+                            transparent 40%, 
+                            hsl(var(--primary) / 0.3) 50%, 
+                            transparent 60%, 
+                            transparent 100%)`,
+                        maskImage: "linear-gradient(black, black)",
+                        maskComposite: "exclude",
+                        WebkitMaskComposite: "xor",
+                        mask: "linear-gradient(black, black) content-box, linear-gradient(black, black)",
+                        padding: "1px",
+                        opacity: isHovered ? 0.8 : 0.4,
+                    }}
+                    animate={{
+                        background: `linear-gradient(${isHovered ? 180 : 90}deg, 
+                            transparent 0%, 
+                            transparent 40%, 
+                            hsl(var(--primary) / ${isHovered ? 0.6 : 0.3}) 50%, 
+                            transparent 60%, 
+                            transparent 100%)`,
+                    }}
+                    transition={{ duration: 0.3 }}
+                />
+            </div>
+
             <button
                 ref={ref}
-                className="w-full h-full bg-transparent border-none cursor-pointer"
+                className="relative w-full h-full bg-transparent border-none cursor-pointer z-10"
                 {...props}
             >
                 <span
