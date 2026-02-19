@@ -6,16 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import {
     Code,
     Database,
-    Globe,
-    Smartphone,
-    Cloud,
-    Shield,
-    Cpu,
-    GitBranch,
+    Server,
     Palette,
-    Zap,
-    Layers,
-    Server
+    Plug,
+    ShoppingBag,
+    Sparkles
 } from "lucide-react";
 
 interface SkillCategory {
@@ -32,42 +27,49 @@ const skillCategories: SkillCategory[] = [
         icon: Code,
         color: "from-blue-500 to-blue-600",
         description: "Modern user interface development",
-        skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML5", "CSS3", "JavaScript", "Angular"]
+        skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML5", "CSS3", "JavaScript", "Shadcn UI"]
     },
     {
         title: "Backend Development",
         icon: Server,
         color: "from-green-500 to-green-600",
         description: "Server-side application development",
-        skills: ["Node.js", "Express", "Django", "Python", "REST APIs", "GraphQL", "Microservices", "Authentication"]
+        skills: ["Node.js", "Express", "REST APIs", "Middleware", "Validation", "Error Handling", "Authentication"]
     },
     {
-        title: "Database Management",
+        title: "Database & Backend",
         icon: Database,
         color: "from-purple-500 to-purple-600",
-        description: "Data storage and management solutions",
-        skills: ["MongoDB", "PostgreSQL", "MySQL", "Redis", "SQL", "Database Design", "Data Modeling", "Query Optimization"]
+        description: "Data storage and backend services",
+        skills: ["MongoDB", "Supabase", "SQL", "Database Design", "API Design"]
     },
     {
-        title: "Cloud & DevOps",
-        icon: Cloud,
+        title: "Custom Shopify Store Development",
+        icon: ShoppingBag,
+        color: "from-green-600 to-green-800",
+        description: "Custom Shopify stores and themes",
+        skills: ["Custom themes", "Liquid", "Store setup & config", "Shopify Admin", "Product & checkout customization"]
+    },
+    {
+        title: "Integrations & APIs",
+        icon: Plug,
         color: "from-orange-500 to-orange-600",
-        description: "Cloud infrastructure and deployment",
-        skills: ["AWS", "Firebase", "Docker", "Kubernetes", "CI/CD", "Serverless", "Cloud Functions", "Monitoring"]
+        description: "Third-party APIs and platforms",
+        skills: ["GoHighLevel (GHL)", "OAuth 2.0", "Email APIs", "Google Maps", "IPAPI"]
     },
     {
-        title: "Mobile Development",
-        icon: Smartphone,
-        color: "from-pink-500 to-pink-600",
-        description: "Cross-platform mobile applications",
-        skills: ["React Native", "Progressive Web Apps", "Mobile UI/UX", "App Store Deployment", "Push Notifications"]
-    },
-    {
-        title: "UI/UX Design",
+        title: "UI/UX & Design",
         icon: Palette,
         color: "from-indigo-500 to-indigo-600",
         description: "User experience and interface design",
-        skills: ["Figma", "Adobe XD", "Design Systems", "Prototyping", "User Research", "Accessibility", "Responsive Design"]
+        skills: ["Responsive Design", "Tailwind CSS", "Component Libraries", "Accessibility"]
+    },
+    {
+        title: "Tools & Workflows",
+        icon: Sparkles,
+        color: "from-pink-500 to-pink-600",
+        description: "AI-assisted and scalable development",
+        skills: ["Cursor & AI-assisted dev", "Building scalable apps", "Gemini", "UI Libraries", "SEO", "Performance Optimization"]
     }
 ];
 
@@ -106,7 +108,7 @@ export function SkillsSection() {
                         transition={{ delay: 0.6, duration: 0.8 }}
                         viewport={{ once: true }}
                     >
-                        Comprehensive technical expertise across modern web development, cloud technologies, and user experience design.
+                        Full-stack development, custom Shopify stores, API integrations (GHL), and AI-assisted scalable builds.
                     </motion.p>
                 </motion.div>
 

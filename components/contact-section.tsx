@@ -11,9 +11,6 @@ import {
     Send,
     Github,
     Linkedin,
-    Twitter,
-    Calendar,
-    Clock,
     CheckCircle
 } from "lucide-react";
 import { useState } from "react";
@@ -35,21 +32,20 @@ const contactInfo: ContactInfo[] = [
     {
         icon: Phone,
         title: "Phone",
-        value: "+92 318 4189654",
+        value: "03184189654",
         description: "Available for calls"
     },
     {
         icon: MapPin,
         title: "Location",
-        value: "Lahore, Pakistan",
+        value: "Lahore, Punjab, Pakistan",
         description: "Open to remote work"
     }
 ];
 
 const socialLinks = [
-    { name: "GitHub", icon: Github, href: "#", color: "hover:text-gray-900 dark:hover:text-gray-100" },
-    { name: "LinkedIn", icon: Linkedin, href: "#", color: "hover:text-blue-600" },
-    { name: "Twitter", icon: Twitter, href: "#", color: "hover:text-blue-400" }
+    { name: "GitHub", icon: Github, href: "https://github.com/talibabbas77", color: "hover:text-gray-900 dark:hover:text-gray-100" },
+    { name: "LinkedIn", icon: Linkedin, href: "https://pk.linkedin.com/in/talib-abbas", color: "hover:text-blue-600" }
 ];
 
 export function ContactSection() {

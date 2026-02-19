@@ -21,48 +21,37 @@ interface Project {
 
 const projects: Project[] = [
     {
-        id: "namastheusa",
-        title: "NamastheUSA",
-        description: "Comprehensive platform connecting Indian community in the USA",
-        longDescription: "A full-featured platform designed to connect and serve the Indian community across the United States. Features include community forums, event listings, business directory, and cultural resources.",
-        technologies: ["React", "Next.js", "Node.js", "MongoDB", "Tailwind CSS"],
-        category: "Community Platform",
-        status: "Live",
-        liveUrl: "#",
-        githubUrl: "#"
-    },
-    {
-        id: "abayadesigns",
-        title: "AbayaDesigns",
-        description: "Premium e-commerce platform for Islamic fashion and modest clothing",
-        longDescription: "A sophisticated e-commerce solution specializing in Islamic fashion, featuring advanced product catalogs, size guides, secure payment processing, and multi-language support for global customers.",
-        technologies: ["React", "Next.js", "Stripe", "MongoDB", "AWS"],
+        id: "zaivor",
+        title: "Zaivor",
+        description: "Custom Shopify store — design, theme, and checkout experience",
+        longDescription: "Custom Shopify store development from setup to theme customization. Built with Shopify's ecosystem for a polished e-commerce experience, product presentation, and checkout flow.",
+        technologies: ["Shopify", "Liquid", "Custom themes", "E-commerce"],
         category: "E-commerce",
         status: "Live",
-        liveUrl: "#",
-        githubUrl: "#"
+        liveUrl: "https://zaivor.com",
+        githubUrl: undefined
     },
     {
-        id: "alfatahzarihouse",
-        title: "AlFatahZariHouse",
-        description: "Traditional Pakistani embroidery and textile business platform",
-        longDescription: "A specialized platform showcasing traditional Pakistani embroidery work, featuring custom order management, artisan portfolios, and cultural heritage preservation through digital commerce.",
-        technologies: ["React", "Node.js", "Express", "MongoDB", "Firebase"],
-        category: "Cultural Commerce",
+        id: "namastheusa",
+        title: "NamastheUSA",
+        description: "Community classified marketplace for services, rentals, and events",
+        longDescription: "Full-stack platform with Next.js (TS) and Tailwind CSS for posting and browsing listings. Integrated IPAPI, Google Maps, and Email API for geolocation, location-based listings, and notifications. Optimized performance, SEO, and scalable component architecture.",
+        technologies: ["Next.js", "TypeScript", "Tailwind CSS", "IPAPI", "Google Maps", "Email API"],
+        category: "Community Marketplace",
         status: "Live",
-        liveUrl: "#",
-        githubUrl: "#"
+        liveUrl: "https://namastheusa.com",
+        githubUrl: "https://github.com/talibabbas77"
     },
     {
-        id: "billmanagement",
-        title: "Bill Management System",
-        description: "Comprehensive financial management solution for businesses",
-        longDescription: "An enterprise-grade billing and invoice management system with automated workflows, financial reporting, client management, and integration capabilities for modern businesses.",
-        technologies: ["React", "Node.js", "PostgreSQL", "Docker", "AWS"],
-        category: "Business Solution",
-        status: "Completed",
-        liveUrl: "#",
-        githubUrl: "#"
+        id: "ai-resume-builder",
+        title: "AI Resume Builder",
+        description: "ATS-optimized resumes powered by AI",
+        longDescription: "AI-powered platform using Gemini to generate professional, ATS-friendly resumes with optimized content, skills, and formatting for improved recruiter visibility.",
+        technologies: ["React", "Next.js", "Gemini AI", "TypeScript", "Tailwind CSS"],
+        category: "Academic Project",
+        status: "Live",
+        liveUrl: undefined,
+        githubUrl: "https://github.com/talibabbas77/AI-Resume-Builder"
     }
 ];
 
@@ -111,7 +100,7 @@ export function ProjectsSection() {
                             transition={{ delay: 0.6, duration: 0.8 }}
                             viewport={{ once: true }}
                         >
-                            A showcase of my recent work, highlighting innovative solutions and technical expertise across various industries.
+                            Academic and professional projects—full-stack platforms, AI tools, and scalable web applications.
                         </motion.p>
                     </motion.div>
 
@@ -173,15 +162,18 @@ export function ProjectsSection() {
                                         </div>
 
                                         {/* Action Buttons */}
-                                        <div className="flex gap-3">
+                                        <div className="flex gap-3 flex-wrap">
                                             {project.liveUrl && (
                                                 <Button
                                                     variant="default"
                                                     size="sm"
                                                     className="flex items-center gap-2 group-hover:bg-primary/90 transition-colors duration-300"
+                                                    asChild
                                                 >
-                                                    <ExternalLink className="w-4 h-4" />
-                                                    Live Demo
+                                                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                                                        <ExternalLink className="w-4 h-4" />
+                                                        Live Demo
+                                                    </a>
                                                 </Button>
                                             )}
                                             {project.githubUrl && (
@@ -189,19 +181,14 @@ export function ProjectsSection() {
                                                     variant="outline"
                                                     size="sm"
                                                     className="flex items-center gap-2 group-hover:border-primary group-hover:text-primary transition-colors duration-300"
+                                                    asChild
                                                 >
-                                                    <Github className="w-4 h-4" />
-                                                    Code
+                                                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                                                        <Github className="w-4 h-4" />
+                                                        Code
+                                                    </a>
                                                 </Button>
                                             )}
-                                            <Button
-                                                variant="ghost"
-                                                size="sm"
-                                                className="flex items-center gap-2 group-hover:text-primary transition-colors duration-300"
-                                            >
-                                                Learn More
-                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                                            </Button>
                                         </div>
                                     </CardContent>
                                 </Card>
@@ -220,9 +207,11 @@ export function ProjectsSection() {
                         <p className="text-muted-foreground mb-6">
                             Interested in working together or have a project in mind?
                         </p>
-                        <Button size="lg" className="px-8 py-6">
-                            Start a Project
-                            <ArrowRight className="w-5 h-5 ml-2" />
+                        <Button size="lg" className="px-8 py-6" asChild>
+                            <a href="#contact">
+                                Start a Project
+                                <ArrowRight className="w-5 h-5 ml-2 inline" />
+                            </a>
                         </Button>
                     </motion.div>
                 </div>

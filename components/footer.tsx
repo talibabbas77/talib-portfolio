@@ -10,26 +10,19 @@ import {
     MapPin,
     Github,
     Linkedin,
-    Twitter,
-    Instagram,
     ArrowUp,
     Heart,
     Code,
     Palette,
     Zap,
     Globe,
-    Calendar,
-    Clock,
-    CheckCircle,
-    ExternalLink
+    CheckCircle
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const socialLinks = [
-    { name: "GitHub", icon: Github, href: "#", color: "hover:text-gray-900 dark:hover:text-gray-100", bgColor: "hover:bg-gray-100 dark:hover:bg-gray-800" },
-    { name: "LinkedIn", icon: Linkedin, href: "#", color: "hover:text-blue-600", bgColor: "hover:bg-blue-50 dark:hover:bg-blue-900/20" },
-    { name: "Twitter", icon: Twitter, href: "#", color: "hover:text-blue-400", bgColor: "hover:bg-blue-50 dark:hover:bg-blue-900/20" },
-    { name: "Instagram", icon: Instagram, href: "#", color: "hover:text-pink-500", bgColor: "hover:bg-pink-50 dark:hover:bg-pink-900/20" }
+    { name: "GitHub", icon: Github, href: "https://github.com/talibabbas77", color: "hover:text-gray-900 dark:hover:text-gray-100", bgColor: "hover:bg-gray-100 dark:hover:bg-gray-800" },
+    { name: "LinkedIn", icon: Linkedin, href: "https://pk.linkedin.com/in/talib-abbas", color: "hover:text-blue-600", bgColor: "hover:bg-blue-50 dark:hover:bg-blue-900/20" }
 ];
 
 const quickLinks = [
@@ -48,9 +41,9 @@ const services = [
 ];
 
 const contactInfo = [
-    { icon: Mail, label: "Email", value: "talib@example.com", href: "mailto:talib@example.com" },
-    { icon: Phone, label: "Phone", value: "+1 (555) 123-4567", href: "tel:+15551234567" },
-    { icon: MapPin, label: "Location", value: "United States", href: "#" }
+    { icon: Mail, label: "Email", value: "talibali303@gmail.com", href: "mailto:talibali303@gmail.com" },
+    { icon: Phone, label: "Phone", value: "03184189654", href: "tel:+923184189654" },
+    { icon: MapPin, label: "Location", value: "Lahore, Punjab, Pakistan", href: "#" }
 ];
 
 export function Footer() {
@@ -103,8 +96,7 @@ export function Footer() {
                                 <div>
                                     <h3 className="text-2xl font-bold text-foreground mb-2">Talib Abbas</h3>
                                     <p className="text-muted-foreground leading-relaxed">
-                                        Full-stack developer passionate about creating exceptional digital experiences
-                                        and innovative web solutions.
+                                        Full-stack developer — React, Next.js, Node.js, GHL & Shopify integrations.
                                     </p>
                                 </div>
 

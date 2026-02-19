@@ -15,16 +15,10 @@ const techStack: TechItem[] = [
     { name: "Next.js", icon: "/icon-cloud/nextjs-svgrepo-com.svg", color: "from-gray-700 to-gray-900", description: "Full-Stack Framework" },
     { name: "Node.js", icon: "/icon-cloud/nodejs-icon-svgrepo-com.svg", color: "from-green-500 to-green-700", description: "Backend Runtime" },
     { name: "MongoDB", icon: "/icon-cloud/mongo-svgrepo-com.svg", color: "from-green-600 to-green-800", description: "Database" },
-    { name: "AWS", icon: "/icon-cloud/aws-svgrepo-com.svg", color: "from-orange-400 to-orange-600", description: "Cloud Platform" },
-    { name: "Firebase", icon: "/icon-cloud/firebase-svgrepo-com.svg", color: "from-yellow-400 to-orange-500", description: "Backend Services" },
     { name: "Tailwind", icon: "/icon-cloud/tailwind-svgrepo-com.svg", color: "from-cyan-400 to-cyan-600", description: "CSS Framework" },
     { name: "Express", icon: "/icon-cloud/express-svgrepo-com.svg", color: "from-gray-500 to-gray-700", description: "Web Framework" },
-    { name: "Angular", icon: "/icon-cloud/angular-icon-svgrepo-com.svg", color: "from-red-500 to-red-700", description: "Frontend Framework" },
-    { name: "Django", icon: "/icon-cloud/django-svgrepo-com.svg", color: "from-green-700 to-green-900", description: "Python Framework" },
-    { name: "SQL", icon: "/icon-cloud/sql-svgrepo-com.svg", color: "from-blue-600 to-blue-800", description: "Database Language" },
+    { name: "SQL", icon: "/icon-cloud/sql-svgrepo-com.svg", color: "from-blue-600 to-blue-800", description: "Database" },
     { name: "NPM", icon: "/icon-cloud/npm-svgrepo-com.svg", color: "from-red-600 to-red-800", description: "Package Manager" },
-    { name: "Android", icon: "/icon-cloud/android-icon-svgrepo-com.svg", color: "from-green-400 to-green-600", description: "Mobile Platform" },
-    { name: "Apple", icon: "/icon-cloud/apple-svgrepo-com.svg", color: "from-gray-600 to-gray-800", description: "iOS Platform" },
 ];
 
 export function TechShowcase() {

@@ -16,18 +16,17 @@ const skills = [
 ];
 
 const socialLinks = [
-    { name: "GitHub", icon: Github, href: "#" },
-    { name: "LinkedIn", icon: Linkedin, href: "#" },
-    { name: "Email", icon: Mail, href: "#" },
+    { name: "GitHub", icon: Github, href: "https://github.com/talibabbas77" },
+    { name: "LinkedIn", icon: Linkedin, href: "https://pk.linkedin.com/in/talib-abbas" },
+    { name: "Email", icon: Mail, href: "mailto:talibali303@gmail.com" },
 ];
 
 const developerRoles = [
-    "Full Stack Developer",
     "MERN Stack Developer",
-    "Frontend Developer",
-    "Backend Developer",
+    "Full Stack Developer",
+    "Next.js Developer",
     "React Developer",
-    "Node.js Developer"
+    "GHL & API Integration"
 ];
 
 // Animated Typography Component
@@ -123,9 +122,9 @@ export function HeroSection() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6, duration: 0.8 }}
                         >
-                            Passionate about building scalable web applications and creating seamless user experiences.
-                            I specialize in modern JavaScript frameworks and have extensive experience in full-stack development,
-                            from crafting pixel-perfect frontends to architecting robust backend systems.
+                            Full-stack developer skilled in React.js, Node.js, Express.js, and MongoDB, building scalable web applications.
+                            I use AI-assisted tools like Cursor to ship maintainable, scalable solutions. Experienced with Next.js, Supabase,
+                            Tailwind CSS, custom Shopify stores, and GoHighLevel integrations.
                         </motion.p>
 
                         {/* Action Buttons */}
@@ -135,11 +134,11 @@ export function HeroSection() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.8, duration: 0.8 }}
                         >
-                            <Button size="lg" className="text-base px-8 py-6">
-                                View My Work
+                            <Button size="lg" className="text-base px-8 py-6" asChild>
+                                <a href="#projects">View My Work</a>
                             </Button>
-                            <Button variant="outline" size="lg" className="text-base px-8 py-6">
-                                Get In Touch
+                            <Button variant="outline" size="lg" className="text-base px-8 py-6" asChild>
+                                <a href="#contact">Get In Touch</a>
                             </Button>
                         </motion.div>
 
@@ -200,9 +199,9 @@ export function HeroSection() {
                                                 <div>
                                                     <h4 className="font-semibold">{skill.name}</h4>
                                                     <p className="text-sm text-muted-foreground">
-                                                        {skill.name === "Frontend" && "React, Next.js, TypeScript"}
-                                                        {skill.name === "Design" && "UI/UX, Figma, Design Systems"}
-                                                        {skill.name === "Backend" && "Node.js, Python, Databases"}
+                                                        {skill.name === "Frontend" && "React, Next.js, TypeScript, Tailwind"}
+                                                        {skill.name === "Design" && "Shadcn UI, Responsive Design"}
+                                                        {skill.name === "Backend" && "Node.js, Express, MongoDB, APIs"}
                                                     </p>
                                                 </div>
                                             </motion.div>
@@ -213,7 +212,7 @@ export function HeroSection() {
                                     <div className="pt-4 border-t border-border/50">
                                         <h4 className="font-semibold mb-3 text-center">Tech Stack</h4>
                                         <div className="flex flex-wrap gap-2 justify-center">
-                                            {["React", "Next.js", "TypeScript", "Node.js", "Python", "AWS"].map((tech, index) => (
+                                            {["React", "Next.js", "TypeScript", "Node.js", "Supabase", "GHL"].map((tech, index) => (
                                                 <motion.div
                                                     key={tech}
                                                     initial={{ opacity: 0, scale: 0.8 }}

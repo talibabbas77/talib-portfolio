@@ -4,23 +4,37 @@ import { motion } from "motion/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TechShowcase } from "@/components/ui/tech-showcase";
-import { Code, Database, Globe, Smartphone, Cloud, Shield, Cpu, GitBranch, File, Search, Settings } from "lucide-react";
-
+import { Code, Database, Globe, Plug, Briefcase, Calendar, GraduationCap, Award, ShoppingBag } from "lucide-react";
 
 const skills = [
-    { name: "Frontend Development", icon: Code, description: "React, Next.js, TypeScript, Tailwind CSS" },
-    { name: "Backend Development", icon: Database, description: "Node.js, Express, MongoDB, PostgreSQL" },
-    { name: "Cloud & DevOps", icon: Cloud, description: "AWS, Firebase, Docker, CI/CD" },
-    { name: "Mobile Development", icon: Smartphone, description: "React Native, Progressive Web Apps" },
+    { name: "Frontend Development", icon: Code, description: "React, Next.js, TypeScript, Tailwind CSS, Shadcn UI" },
+    { name: "Backend Development", icon: Database, description: "Node.js, Express, MongoDB, REST APIs" },
+    { name: "Integrations & APIs", icon: Plug, description: "GoHighLevel (GHL), OAuth 2.0, Email APIs" },
+    { name: "Custom Shopify Stores", icon: ShoppingBag, description: "Custom Shopify store development & themes" },
+    { name: "Platforms", icon: Globe, description: "Supabase, Next.js SSR, Responsive Web Apps" },
 ];
 
 const achievements = [
-    "7+ Professional Websites Created",
-    "Full-Stack Development Expertise",
-    "Modern JavaScript Frameworks",
-    "Cloud Infrastructure Management",
-    "Responsive Design Specialist",
-    "Performance Optimization Expert"
+    "Scalable Web Applications",
+    "GHL API & OAuth 2.0 Integration",
+    "Dynamic Dashboards & UI",
+    "Referral & Licensing Systems",
+    "ATS-Optimized & SEO",
+    "RESTful APIs & Error Handling"
+];
+
+const experience = [
+    {
+        role: "MERN Stack Developer",
+        company: "DevExcel IT Solutions",
+        period: "03/2025 – Current",
+        highlights: [
+            "Scalable apps with Next.js & TypeScript, secure REST APIs with middleware & validation",
+            "GoHighLevel (GHL) APIs via OAuth 2.0 — contact management, tagging, automation",
+            "Dynamic dashboards with Tailwind CSS & Shadcn UI",
+            "Referral-based licensing systems in GHL for consultant-level access",
+        ],
+    },
 ];
 
 export function AboutSection() {
@@ -66,22 +80,81 @@ export function AboutSection() {
                                 viewport={{ once: true }}
                             >
                                 <p className="text-lg text-muted-foreground leading-relaxed">
-                                    I'm a passionate full-stack developer with over 3 years of experience in creating
-                                    exceptional digital experiences. My journey began with a curiosity for how things
-                                    work on the web, and it has evolved into a deep expertise in modern web technologies.
+                                    Full-stack developer skilled in React.js, Node.js, Express.js, and MongoDB, building
+                                    scalable web applications. Experienced with Next.js, Supabase, and Tailwind CSS for
+                                    responsive, high-performance UIs. I leverage UI libraries and integrations like
+                                    GoHighLevel and custom Shopify development to automate workflows and deliver solutions. I use AI-assisted tools like Cursor to build scalable, maintainable applications.
                                 </p>
 
                                 <p className="text-lg text-muted-foreground leading-relaxed">
-                                    I specialize in building scalable web applications using React, Next.js, and Node.js.
-                                    My approach combines technical excellence with user-centered design, ensuring that
-                                    every project not only functions flawlessly but also provides an intuitive user experience.
+                                    Currently at DevExcel IT Solutions, I build secure RESTful APIs, integrate GHL via OAuth 2.0
+                                    for contact management and automation, and design dynamic dashboards with Shadcn UI—
+                                    plus referral-based licensing systems for consultant-level access.
                                 </p>
+                            </motion.div>
 
-                                <p className="text-lg text-muted-foreground leading-relaxed">
-                                    From e-commerce platforms like AbayaDesigns and HijabKiDunya to educational tools
-                                    like QuizBee, I've helped businesses transform their digital presence and achieve
-                                    their goals through innovative web solutions.
-                                </p>
+                            {/* Work Experience */}
+                            <motion.div
+                                className="space-y-4"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.7, duration: 0.8 }}
+                                viewport={{ once: true }}
+                            >
+                                <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
+                                    <Briefcase className="w-5 h-5 text-primary" />
+                                    Experience
+                                </h3>
+                                {experience.map((job, i) => (
+                                    <div
+                                        key={i}
+                                        className="p-4 rounded-xl bg-background/50 border border-border/50 space-y-2"
+                                    >
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <span className="font-semibold text-foreground">{job.role}</span>
+                                            <span className="text-muted-foreground">·</span>
+                                            <span className="text-foreground/80">{job.company}</span>
+                                            <span className="text-sm text-muted-foreground flex items-center gap-1">
+                                                <Calendar className="w-3.5 h-3.5" />
+                                                {job.period}
+                                            </span>
+                                        </div>
+                                        <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
+                                            {job.highlights.map((h, j) => (
+                                                <li key={j}>{h}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </motion.div>
+
+                            {/* Education & Certifications */}
+                            <motion.div
+                                className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.8, duration: 0.8 }}
+                                viewport={{ once: true }}
+                            >
+                                <div className="p-4 rounded-xl bg-background/50 border border-border/50">
+                                    <h4 className="font-semibold text-foreground flex items-center gap-2 mb-2">
+                                        <GraduationCap className="w-4 h-4 text-primary" />
+                                        Education
+                                    </h4>
+                                    <p className="text-sm font-medium text-foreground">BSc Computer Science</p>
+                                    <p className="text-sm text-muted-foreground">NCBA&E – Lahore (2020–2024)</p>
+                                </div>
+                                <div className="p-4 rounded-xl bg-background/50 border border-border/50">
+                                    <h4 className="font-semibold text-foreground flex items-center gap-2 mb-2">
+                                        <Award className="w-4 h-4 text-primary" />
+                                        Certifications
+                                    </h4>
+                                    <ul className="text-sm text-muted-foreground space-y-1">
+                                        <li>Problem Solving (HackerRank)</li>
+                                        <li>HTML (Lumos Learning)</li>
+                                        <li>CSS (Great Learning)</li>
+                                    </ul>
+                                </div>
                             </motion.div>
 
                             {/* Skills Grid */}

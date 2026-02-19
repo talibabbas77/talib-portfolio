@@ -4,13 +4,14 @@ import { motion } from "motion/react";
 import { Marquee, MarqueeItem } from "@/components/ui/marquee";
 
 const websites = [
+    "Zaivor",
     "NamastheUSA",
-    "AbayaDesigns",
-    "HijabKiDunya",
-    "QuizBee",
-    "AsaanShadi",
-    "AlFatahZariHouse",
-    "Mentora"
+    "AI Resume Builder",
+    "Next.js",
+    "Custom Shopify",
+    "GoHighLevel",
+    "Supabase",
+    "React"
 ];
 
 export function MarqueeSection() {
@@ -30,10 +31,10 @@ export function MarqueeSection() {
                     viewport={{ once: true }}
                 >
                     <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                        Websites I've Created
+                        Tech & Projects
                     </h2>
                     <p className="text-muted-foreground max-w-2xl mx-auto">
-                        A showcase of professional web applications and platforms I've developed
+                        Stack and platforms I work with — Next.js, GHL, Supabase, Shopify & more
                     </p>
                 </motion.div>
 

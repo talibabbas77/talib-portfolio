@@ -13,8 +13,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Talib Portfolio",
-  description: "Professional portfolio showcasing Talib's work and expertise",
+  title: "Talib Abbas | MERN Stack Developer",
+  description: "Full-stack developer skilled in React, Next.js, Node.js, MongoDB. GHL & Shopify integrations. Lahore, Pakistan.",
 };
 
 export default function RootLayout({
