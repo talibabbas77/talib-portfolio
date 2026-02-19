@@ -1,233 +1,200 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { TechShowcase } from "@/components/ui/tech-showcase";
 import { Code, Database, Globe, Plug, Briefcase, Calendar, GraduationCap, Award, ShoppingBag } from "lucide-react";
+import { TechShowcase } from "@/components/ui/tech-showcase";
+import { cn } from "@/lib/utils";
 
 const skills = [
-    { name: "Frontend Development", icon: Code, description: "React, Next.js, TypeScript, Tailwind CSS, Shadcn UI" },
-    { name: "Backend Development", icon: Database, description: "Node.js, Express, MongoDB, REST APIs" },
-    { name: "Integrations & APIs", icon: Plug, description: "GoHighLevel (GHL), OAuth 2.0, Email APIs" },
-    { name: "Custom Shopify Stores", icon: ShoppingBag, description: "Custom Shopify store development & themes" },
-    { name: "Platforms", icon: Globe, description: "Supabase, Next.js SSR, Responsive Web Apps" },
+    { name: "Frontend", icon: Code, description: "React, Next.js, TypeScript, Tailwind, Shadcn UI" },
+    { name: "Backend", icon: Database, description: "Node.js, Express, MongoDB, REST APIs" },
+    { name: "Integrations", icon: Plug, description: "GHL, OAuth 2.0, Email APIs" },
+    { name: "Shopify", icon: ShoppingBag, description: "Custom stores & themes" },
+    { name: "Platforms", icon: Globe, description: "Supabase, Next.js SSR" },
 ];
 
 const achievements = [
-    "Scalable Web Applications",
-    "GHL API & OAuth 2.0 Integration",
-    "Dynamic Dashboards & UI",
-    "Referral & Licensing Systems",
-    "ATS-Optimized & SEO",
-    "RESTful APIs & Error Handling"
+    "Scalable Web Apps",
+    "GHL & OAuth 2.0",
+    "Dynamic Dashboards",
+    "Referral & Licensing",
+    "ATS & SEO",
+    "REST APIs",
 ];
 
-const experience = [
-    {
-        role: "MERN Stack Developer",
-        company: "DevExcel IT Solutions",
-        period: "03/2025 – Current",
-        highlights: [
-            "Scalable apps with Next.js & TypeScript, secure REST APIs with middleware & validation",
-            "GoHighLevel (GHL) APIs via OAuth 2.0 — contact management, tagging, automation",
-            "Dynamic dashboards with Tailwind CSS & Shadcn UI",
-            "Referral-based licensing systems in GHL for consultant-level access",
-        ],
-    },
-];
+const experience = {
+    role: "MERN Stack Developer",
+    company: "DevExcel IT Solutions",
+    period: "03/2025 – Current",
+    highlights: [
+        "Next.js & TypeScript, secure REST APIs, middleware & validation",
+        "GHL APIs via OAuth 2.0 — contacts, tagging, automation",
+        "Dashboards with Tailwind & Shadcn UI",
+        "Referral-based licensing in GHL",
+    ],
+};
 
 export function AboutSection() {
     return (
         <>
-            <section id="about" className="py-20">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                        {/* Left Column - About Content */}
+            <section id="about" className="py-16 lg:py-20">
+                <div className="max-w-6xl mx-auto px-6 lg:px-8">
+                    <motion.div
+                        className="text-center mb-8 lg:mb-10"
+                        initial={{ opacity: 0, y: 12 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4 }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+                            About Me
+                        </h2>
+                        <div className="w-12 h-0.5 bg-primary rounded-full mx-auto mt-2" />
+                    </motion.div>
+
+                    {/* Row 1: Intro + Experience — same height, landscape */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4 mb-3 lg:mb-4">
                         <motion.div
-                            className="space-y-8"
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
+                            className="rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm p-4 lg:p-5"
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.05 }}
                             viewport={{ once: true }}
                         >
-                            {/* Section Title */}
-                            <div>
-                                <motion.h2
-                                    className="text-4xl md:text-5xl font-bold text-foreground mb-4"
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.2, duration: 0.8 }}
-                                    viewport={{ once: true }}
-                                >
-                                    About Me
-                                </motion.h2>
-                                <motion.div
-                                    className="w-20 h-1 bg-gradient-to-r from-primary to-primary/60 rounded-full"
-                                    initial={{ opacity: 0, scaleX: 0 }}
-                                    whileInView={{ opacity: 1, scaleX: 1 }}
-                                    transition={{ delay: 0.4, duration: 0.8 }}
-                                    viewport={{ once: true }}
-                                />
-                            </div>
-
-                            {/* About Text */}
-                            <motion.div
-                                className="space-y-6"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.6, duration: 0.8 }}
-                                viewport={{ once: true }}
-                            >
-                                <p className="text-lg text-muted-foreground leading-relaxed">
-                                    Full-stack developer skilled in React.js, Node.js, Express.js, and MongoDB, building
-                                    scalable web applications. Experienced with Next.js, Supabase, and Tailwind CSS for
-                                    responsive, high-performance UIs. I leverage UI libraries and integrations like
-                                    GoHighLevel and custom Shopify development to automate workflows and deliver solutions. I use AI-assisted tools like Cursor to build scalable, maintainable applications.
-                                </p>
-
-                                <p className="text-lg text-muted-foreground leading-relaxed">
-                                    Currently at DevExcel IT Solutions, I build secure RESTful APIs, integrate GHL via OAuth 2.0
-                                    for contact management and automation, and design dynamic dashboards with Shadcn UI—
-                                    plus referral-based licensing systems for consultant-level access.
-                                </p>
-                            </motion.div>
-
-                            {/* Work Experience */}
-                            <motion.div
-                                className="space-y-4"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.7, duration: 0.8 }}
-                                viewport={{ once: true }}
-                            >
-                                <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
-                                    <Briefcase className="w-5 h-5 text-primary" />
-                                    Experience
-                                </h3>
-                                {experience.map((job, i) => (
-                                    <div
-                                        key={i}
-                                        className="p-4 rounded-xl bg-background/50 border border-border/50 space-y-2"
-                                    >
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            <span className="font-semibold text-foreground">{job.role}</span>
-                                            <span className="text-muted-foreground">·</span>
-                                            <span className="text-foreground/80">{job.company}</span>
-                                            <span className="text-sm text-muted-foreground flex items-center gap-1">
-                                                <Calendar className="w-3.5 h-3.5" />
-                                                {job.period}
-                                            </span>
-                                        </div>
-                                        <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
-                                            {job.highlights.map((h, j) => (
-                                                <li key={j}>{h}</li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))}
-                            </motion.div>
-
-                            {/* Education & Certifications */}
-                            <motion.div
-                                className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.8, duration: 0.8 }}
-                                viewport={{ once: true }}
-                            >
-                                <div className="p-4 rounded-xl bg-background/50 border border-border/50">
-                                    <h4 className="font-semibold text-foreground flex items-center gap-2 mb-2">
-                                        <GraduationCap className="w-4 h-4 text-primary" />
-                                        Education
-                                    </h4>
-                                    <p className="text-sm font-medium text-foreground">BSc Computer Science</p>
-                                    <p className="text-sm text-muted-foreground">NCBA&E – Lahore (2020–2024)</p>
-                                </div>
-                                <div className="p-4 rounded-xl bg-background/50 border border-border/50">
-                                    <h4 className="font-semibold text-foreground flex items-center gap-2 mb-2">
-                                        <Award className="w-4 h-4 text-primary" />
-                                        Certifications
-                                    </h4>
-                                    <ul className="text-sm text-muted-foreground space-y-1">
-                                        <li>Problem Solving (HackerRank)</li>
-                                        <li>HTML (Lumos Learning)</li>
-                                        <li>CSS (Great Learning)</li>
-                                    </ul>
-                                </div>
-                            </motion.div>
-
-                            {/* Skills Grid */}
-                            <motion.div
-                                className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.8, duration: 0.8 }}
-                                viewport={{ once: true }}
-                            >
-                                {skills.map((skill, index) => (
-                                    <motion.div
-                                        key={skill.name}
-                                        className="flex items-start gap-3 p-4 rounded-lg bg-background/50 backdrop-blur-sm border border-border/50 hover:bg-accent/50 transition-colors"
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
-                                        transition={{ delay: 1 + index * 0.1, duration: 0.5 }}
-                                        viewport={{ once: true }}
-                                        whileHover={{ scale: 1.02 }}
-                                    >
-                                        <div className="p-2 rounded-lg bg-primary/10">
-                                            <skill.icon className="w-5 h-5 text-primary" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-semibold text-foreground">{skill.name}</h4>
-                                            <p className="text-sm text-muted-foreground">{skill.description}</p>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </motion.div>
-
-                            {/* Achievements */}
-                            <motion.div
-                                className="pt-6"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 1.2, duration: 0.8 }}
-                                viewport={{ once: true }}
-                            >
-                                <h3 className="text-xl font-semibold text-foreground mb-4">Key Achievements</h3>
-                                <div className="flex flex-wrap gap-2">
-                                    {achievements.map((achievement, index) => (
-                                        <motion.div
-                                            key={achievement}
-                                            initial={{ opacity: 0, scale: 0.8 }}
-                                            whileInView={{ opacity: 1, scale: 1 }}
-                                            transition={{ delay: 1.4 + index * 0.05, duration: 0.3 }}
-                                            viewport={{ once: true }}
-                                        >
-                                            <Badge variant="secondary" className="text-sm">
-                                                {achievement}
-                                            </Badge>
-                                        </motion.div>
-                                    ))}
-                                </div>
-                            </motion.div>
+                            <p className="text-muted-foreground leading-relaxed text-sm lg:text-[15px]">
+                                Full-stack developer skilled in React, Node.js, Express, and MongoDB, building scalable
+                                web applications. I use Next.js, Supabase, and Tailwind for high-performance UIs, plus
+                                GoHighLevel and custom Shopify development. I rely on AI-assisted tools like Cursor to
+                                ship maintainable, scalable solutions.
+                            </p>
                         </motion.div>
-
-                        {/* Right Column - Tech Showcase */}
                         <motion.div
-                            className="flex justify-center lg:justify-end"
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
+                            className="rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm p-4 lg:p-5 flex flex-col"
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.08 }}
                             viewport={{ once: true }}
                         >
-                            <TechShowcase />
+                            <div className="flex items-center gap-2 mb-3">
+                                <div className="p-1.5 rounded-lg bg-primary/10">
+                                    <Briefcase className="w-3.5 h-3.5 text-primary" />
+                                </div>
+                                <span className="text-xs font-semibold text-foreground uppercase tracking-wider">
+                                    Experience
+                                </span>
+                            </div>
+                            <p className="font-semibold text-foreground text-sm">{experience.role}</p>
+                            <p className="text-xs text-muted-foreground">{experience.company}</p>
+                            <p className="text-xs text-muted-foreground/80 flex items-center gap-1 mt-0.5 mb-3">
+                                <Calendar className="w-3 h-3" />
+                                {experience.period}
+                            </p>
+                            <ul className="space-y-1 text-xs text-muted-foreground list-disc list-inside marker:text-primary/60 flex-1">
+                                {experience.highlights.map((h, i) => (
+                                    <li key={i}>{h}</li>
+                                ))}
+                            </ul>
                         </motion.div>
                     </div>
+
+                    {/* Row 2: Education, Certifications, Focus, Highlights — one compact row, content height */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-3 lg:mb-4 items-start">
+                        <motion.div
+                            className="rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm p-4"
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.1 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="flex items-center gap-2 mb-2">
+                                <GraduationCap className="w-3.5 h-3.5 text-primary" />
+                                <span className="text-xs font-semibold text-foreground uppercase tracking-wider">
+                                    Education
+                                </span>
+                            </div>
+                            <p className="font-medium text-foreground text-xs">BSc Computer Science</p>
+                            <p className="text-xs text-muted-foreground">NCBA&E – Lahore · 2020–2024</p>
+                        </motion.div>
+                        <motion.div
+                            className="rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm p-4"
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.12 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="flex items-center gap-2 mb-2">
+                                <Award className="w-3.5 h-3.5 text-primary" />
+                                <span className="text-xs font-semibold text-foreground uppercase tracking-wider">
+                                    Certifications
+                                </span>
+                            </div>
+                            <ul className="text-xs text-muted-foreground space-y-0.5">
+                                <li>Problem Solving (HackerRank)</li>
+                                <li>HTML (Lumos)</li>
+                                <li>CSS (Great Learning)</li>
+                            </ul>
+                        </motion.div>
+                        <motion.div
+                            className="rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm p-4 sm:col-span-2 lg:col-span-1"
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.14 }}
+                            viewport={{ once: true }}
+                        >
+                            <span className="text-xs font-semibold text-foreground uppercase tracking-wider block mb-2">
+                                Focus areas
+                            </span>
+                            <div className="flex flex-wrap gap-2">
+                                {skills.map((s) => (
+                                    <div
+                                        key={s.name}
+                                        className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg bg-background/60 border border-border/40"
+                                    >
+                                        <s.icon className="w-3.5 h-3.5 text-primary shrink-0" />
+                                        <span className="text-xs font-medium text-foreground">{s.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+                        <motion.div
+                            className="rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm p-4 sm:col-span-2 lg:col-span-1"
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.16 }}
+                            viewport={{ once: true }}
+                        >
+                            <span className="text-xs font-semibold text-foreground uppercase tracking-wider block mb-2">
+                                Highlights
+                            </span>
+                            <div className="flex flex-wrap gap-1.5">
+                                {achievements.map((a) => (
+                                    <span
+                                        key={a}
+                                        className="inline-flex px-2.5 py-1 rounded-full text-[11px] font-medium bg-muted/80 text-muted-foreground border border-border/50"
+                                    >
+                                        {a}
+                                    </span>
+                                ))}
+                            </div>
+                        </motion.div>
+                    </div>
+
+                    {/* Row 3: Tech stack — full width, dense grid */}
+                    <motion.div
+                        className="rounded-xl border border-border/60 bg-card/50 backdrop-blur-sm p-4 lg:p-5 overflow-hidden"
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.2 }}
+                        viewport={{ once: true }}
+                    >
+                        <span className="text-xs font-semibold text-foreground uppercase tracking-wider block mb-3">
+                            Tech stack
+                        </span>
+                        <TechShowcase />
+                    </motion.div>
                 </div>
             </section>
 
-            {/* Separator */}
             <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
         </>
     );
