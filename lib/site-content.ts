@@ -27,31 +27,42 @@ export const socialLinks = [
   },
 ] as const;
 
+/** Home hash links + multi-page routes */
 export const navItems = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Work", href: "#projects" },
-  { name: "Skills", href: "#skills" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/", type: "route" as const },
+  { name: "Portfolio", href: "/portfolio", type: "route" as const },
+  { name: "Case Studies", href: "/case-studies", type: "route" as const },
+  { name: "Blog", href: "/blog", type: "route" as const },
+  { name: "About", href: "/about", type: "route" as const },
+  { name: "Contact", href: "/contact", type: "route" as const },
+] as const;
+
+export const footerNavItems = [
+  { name: "Home", href: "/" },
+  { name: "Portfolio", href: "/portfolio" },
+  { name: "Case Studies", href: "/case-studies" },
+  { name: "Blog", href: "/blog" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
 ] as const;
 
 export const heroCopy = {
-  headline: "I build production web apps clients can run on.",
+  headline: "I build production web apps that teams can keep running.",
   support:
-    "From Next.js frontends to Node APIs, Shopify themes, and AI features wired into live products.",
+    "Next.js frontends, Node APIs, Shopify themes, and AI features wired into products people already use.",
   detail:
-    "I take features from schema and API through UI and deploy, then stick around for the bugs that show up in production.",
-  primaryCta: "View work",
-  secondaryCta: "Hire me",
+    "I take a feature from schema and API through UI and deploy, then stay for the bugs that only show up in production.",
+  primaryCta: "View case studies",
+  secondaryCta: "Get in touch",
 } as const;
 
 export const aboutCopy = {
   title: "About",
-  lead: "I ship full-stack features for real client work, not demos.",
+  lead: "I do full-stack client work. The goal is steady delivery, not noise.",
   paragraphs: [
-    "At DevExcel IT Solutions I build with Next.js, TypeScript, and Node.js end to end: data models, APIs, and UI that ships to Vercel.",
-    "Day to day that also means Shopify Liquid themes, WordPress maintenance, GoHighLevel OAuth workflows that cut manual CRM work, and OpenAI or Gemini RAG features with token costs kept under control.",
-    "Before that at TecShield I turned Figma into React interfaces and wrote Express routes, MongoDB schemas, and payment integrations under team review.",
+    "At DevExcel IT Solutions I work with Next.js, TypeScript, and Node.js from data models through UI that deploys on Vercel.",
+    "That also covers Shopify Liquid themes, WordPress upkeep, GoHighLevel OAuth workflows that reduce manual CRM steps, and OpenAI or Gemini features with token use kept in check.",
+    "Earlier at TecShield I turned Figma into React interfaces and wrote Express routes, MongoDB schemas, and payment integrations with team review.",
   ],
   highlights: [
     {
@@ -89,18 +100,93 @@ export const aboutCopy = {
   ],
 } as const;
 
-export const experience = [
+export type ExperienceRole = {
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  bullets: string[];
+};
+
+export const experience: ExperienceRole[] = [
   {
     company: "DevExcel IT Solutions",
     role: "Full-Stack Developer",
     period: "Mar 2024 - Present",
     location: "Lahore, Pakistan",
+    bullets: [
+      "Built and shipped production features with Next.js, TypeScript, and Node.js across client projects, owning work from database design through deployed UI.",
+      "Developed and customized Shopify storefronts with Liquid: custom sections, theme templates, and dynamic product logic.",
+      "Maintained WordPress sites with custom plugins, page builders, and REST API connections.",
+      "Integrated GoHighLevel CRM via OAuth 2.0 for contact management, pipeline updates, and tagging - cutting manual client effort by over 60%.",
+      "Built a referral-based licensing and consultant-access system inside GHL that reduced onboarding overhead for multiple clients.",
+      "Integrated OpenAI and Gemini APIs into live products, including RAG pipelines with token usage kept under control.",
+      "Designed REST APIs with JWT auth, role-based access, and structured error handling.",
+      "Built reusable Tailwind and Shadcn/UI components that sped up recurring UI work.",
+      "Managed Vercel deployments with clean staging and production environment configs.",
+    ],
   },
   {
     company: "TecShield Technologies",
     role: "Junior Web Developer",
     period: "Aug 2023 - Feb 2024",
     location: "Lahore, Pakistan",
+    bullets: [
+      "Built responsive React interfaces from Figma into production-ready layouts.",
+      "Wrote Node.js and Express routes for auth, form validation, and third-party APIs.",
+      "Designed and queried MongoDB collections for internal tools, with schema patterns reused across projects.",
+      "Integrated payment and notification APIs under senior guidance for client-facing releases.",
+      "Worked in a team Git workflow with daily branching, PRs, and structured code reviews.",
+    ],
+  },
+];
+
+export const education = {
+  degree: "Bachelor of Science in Computer Science",
+  school: "National College of Business Administration & Economics (NCBA&E)",
+  period: "Nov 2020 - Oct 2024",
+  location: "Lahore, Pakistan",
+} as const;
+
+export type Certification = {
+  title: string;
+  issuer: string;
+  year: string;
+};
+
+export const certifications: Certification[] = [
+  {
+    title: "Claude Code Cohort Certificate",
+    issuer: "DevExcel IT Solutions",
+    year: "May 2026",
+  },
+  {
+    title: "Problem Solving",
+    issuer: "HackerRank",
+    year: "2023",
+  },
+];
+
+export const services = [
+  {
+    title: "Next.js & MERN apps",
+    description:
+      "Full-stack product features from schema and API through UI and Vercel deploy.",
+  },
+  {
+    title: "Shopify themes",
+    description:
+      "Custom Liquid storefronts: sections, templates, filters, and mobile-first performance.",
+  },
+  {
+    title: "CRM automation",
+    description:
+      "GoHighLevel OAuth workflows for contacts, pipelines, tagging, and licensing flows.",
+  },
+  {
+    title: "AI integrations",
+    description:
+      "OpenAI and Gemini features with RAG where it helps, and token costs kept in check.",
   },
 ] as const;
 
@@ -115,6 +201,7 @@ export type Project = {
   githubUrl?: string;
   imageUrl: string;
   imageAlt: string;
+  caseStudySlug?: string;
 };
 
 export const projects: Project[] = [
@@ -129,6 +216,7 @@ export const projects: Project[] = [
     liveUrl: "https://tradeflow-trading-journal.vercel.app",
     imageUrl: "/projects/piplog.svg",
     imageAlt: "PipLog trading journal product preview",
+    caseStudySlug: "piplog",
   },
   {
     id: "ai-resume-builder",
@@ -141,6 +229,7 @@ export const projects: Project[] = [
     liveUrl: "https://ai-resume-builder-seven-theta.vercel.app",
     imageUrl: "/projects/ai-resume-builder.svg",
     imageAlt: "AI Resume Builder app preview",
+    caseStudySlug: "ai-resume-builder",
   },
   {
     id: "zaivor",
@@ -153,6 +242,7 @@ export const projects: Project[] = [
     liveUrl: "https://zaivor.com",
     imageUrl: "/projects/zaivor.svg",
     imageAlt: "Zaivor Shopify storefront preview",
+    caseStudySlug: "zaivor",
   },
   {
     id: "namastheusa",
@@ -165,6 +255,7 @@ export const projects: Project[] = [
     liveUrl: "https://namastheusa.com",
     imageUrl: "/projects/namastheusa.svg",
     imageAlt: "NamastheUSA marketplace preview",
+    caseStudySlug: "namastheusa",
   },
 ];
 
@@ -208,14 +299,32 @@ export const skillCategories = [
 
 export const contactCopy = {
   title: "Contact",
-  lead: "Tell me about the product, the stack, and the timeline. I reply within a day.",
+  headline: "Start with a short brief",
+  lead: "Share the product, the stack, and the timeline. I usually reply within a day.",
   formTitle: "Send a message",
-  successTitle: "Message sent",
+  successTitle: "Message received",
   successBody: "Thanks. I will reply to your email soon.",
 } as const;
 
 export const ctaLabels = {
-  viewWork: "View work",
-  hireMe: "Hire me",
+  viewWork: "View case studies",
+  hireMe: "Get in touch",
   bookCall: "Book a call",
+  readCaseStudy: "Read case study",
+  viewAllWork: "All case studies",
+  viewAllPosts: "All posts",
+  viewPortfolio: "View portfolio",
 } as const;
+
+export type { CaseStudy } from "@/lib/content/case-studies";
+export type { BlogPost } from "@/lib/content/blog-posts";
+export {
+  caseStudies,
+  getCaseStudy,
+  getCaseStudySlugs,
+} from "@/lib/content/case-studies";
+export {
+  blogPosts,
+  getBlogPost,
+  getBlogPostSlugs,
+} from "@/lib/content/blog-posts";

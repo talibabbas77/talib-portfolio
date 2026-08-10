@@ -186,6 +186,23 @@
     font-family: var(--font-garamond), "EB Garamond", ui-serif, Georgia, serif;
   }
 
+  .editorial-prose a {
+    color: var(--accent-brand);
+    text-underline-offset: 3px;
+  }
+
+  .editorial-prose a:hover {
+    text-decoration: underline;
+  }
+
+  .editorial-prose p {
+    color: color-mix(in oklab, var(--foreground) 72%, transparent);
+  }
+
+  .dark .editorial-prose p {
+    color: color-mix(in oklab, var(--foreground) 78%, transparent);
+  }
+
   .text-accent-brand {
     color: var(--accent-brand);
   }

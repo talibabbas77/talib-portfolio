@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SiteBackground } from "@/components/site-background";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { KinoRoot } from "@/components/motion/kino-root";
 import { siteConfig, socialLinks } from "@/lib/site-content";
 
 const ubuntu = Ubuntu({
@@ -121,6 +122,7 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
       className={`${ubuntu.variable} ${ebGaramond.variable} scroll-smooth`}
+      data-scroll-behavior="smooth"
     >
       <body className="font-sans antialiased" suppressHydrationWarning>
         <script
@@ -135,11 +137,13 @@ export default function RootLayout({
           storageKey="talib-portfolio-theme"
         >
           <SiteBackground />
-          <div className="relative z-10">
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-          </div>
+          <KinoRoot>
+            <div className="relative z-10">
+              <Navbar />
+              <main>{children}</main>
+              <Footer />
+            </div>
+          </KinoRoot>
         </ThemeProvider>
       </body>
     </html>

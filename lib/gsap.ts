@@ -16,6 +16,7 @@ export function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+/** Fast, low-friction reveals so scrolling never feels blocked. */
 export function revealSection(
   scope: HTMLElement | null,
   selector = "[data-reveal]"
@@ -27,24 +28,27 @@ export function revealSection(
   if (!targets.length) return;
 
   if (prefersReducedMotion()) {
-    gsap.set(targets, { opacity: 1, y: 0, filter: "none" });
+    gsap.set(targets, { opacity: 1, y: 0, clearProps: "filter" });
     return;
   }
 
   gsap.fromTo(
     targets,
-    { opacity: 0, y: 32, filter: "blur(6px)" },
+    { opacity: 0.35, y: 12 },
     {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
-      duration: 0.85,
-      stagger: 0.08,
-      ease: "power3.out",
+      duration: 0.35,
+      stagger: 0.03,
+      ease: "power2.out",
       scrollTrigger: {
         trigger: scope,
-        start: "top 78%",
+        start: "top 92%",
         once: true,
+        toggleActions: "play none none none",
+      },
+      onComplete: () => {
+        gsap.set(targets, { clearProps: "transform,opacity" });
       },
     }
   );

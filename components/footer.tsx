@@ -1,12 +1,14 @@
 "use client";
 
 import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SiGithub, SiUpwork } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 import {
   ctaLabels,
-  navItems,
+  footerNavItems,
   siteConfig,
   socialLinks,
 } from "@/lib/site-content";
@@ -19,6 +21,8 @@ const SOCIAL_ICONS = {
 } as const;
 
 export function Footer() {
+  const pathname = usePathname();
+  const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -28,12 +32,12 @@ export function Footer() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollTo = (id: string) => {
-    if (id === "home") {
+  const goHomeTop = () => {
+    if (pathname === "/") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    router.push("/");
   };
 
   return (
@@ -62,7 +66,7 @@ export function Footer() {
               <GsapButton
                 variant="brand"
                 size="md"
-                onClick={() => scrollTo("contact")}
+                onClick={() => router.push("/contact")}
               >
                 {ctaLabels.bookCall}
               </GsapButton>
@@ -74,15 +78,14 @@ export function Footer() {
                   Navigate
                 </p>
                 <ul className="space-y-3 text-sm text-muted-foreground">
-                  {navItems.map((item) => (
+                  {footerNavItems.map((item) => (
                     <li key={item.name}>
-                      <button
-                        type="button"
-                        onClick={() => scrollTo(item.href.replace("#", ""))}
-                        className="cursor-pointer transition-colors hover:text-foreground"
+                      <Link
+                        href={item.href}
+                        className="transition-colors hover:text-foreground"
                       >
                         {item.name}
-                      </button>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -147,8 +150,7 @@ export function Footer() {
 
           <div className="mt-14 flex flex-col justify-between gap-3 border-t border-border/50 pt-6 text-sm text-muted-foreground sm:flex-row sm:items-center">
             <p className="min-w-0">
-              © 2026 {siteConfig.name}. Built with
-              Next.js.
+              © 2026 {siteConfig.name}. Built with Next.js.
             </p>
             <p className="shrink-0">Lahore · Remote-friendly</p>
           </div>
@@ -167,7 +169,7 @@ export function Footer() {
       <button
         type="button"
         aria-label="Back to top"
-        onClick={() => scrollTo("home")}
+        onClick={goHomeTop}
         className={`fixed bottom-5 right-4 z-50 rounded-md border border-border bg-background p-3 shadow-sm transition-opacity sm:bottom-8 sm:right-8 ${
           isVisible ? "opacity-100" : "pointer-events-none opacity-0"
         }`}

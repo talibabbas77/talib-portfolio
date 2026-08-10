@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { ArrowRight, Code2, MapPin } from 'lucide-react';
 import { SiGithub, SiUpwork } from 'react-icons/si';
 import { FaLinkedin } from 'react-icons/fa6';
@@ -42,6 +43,7 @@ const StatItem = ({ value, label }: { value: string; label: string }) => (
 );
 
 export function HeroFuturistic() {
+  const router = useRouter();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -121,7 +123,7 @@ export function HeroFuturistic() {
               <GsapButton
                 variant="primary"
                 size="lg"
-                onClick={() => scrollToId('projects')}
+                onClick={() => router.push('/case-studies')}
                 icon={<ArrowRight strokeWidth={1.75} />}
               >
                 {ctaLabels.viewWork}
@@ -129,9 +131,9 @@ export function HeroFuturistic() {
               <GsapButton
                 variant="secondary"
                 size="lg"
-                onClick={() => scrollToId('contact')}
+                onClick={() => router.push('/contact')}
               >
-                {ctaLabels.bookCall}
+                {ctaLabels.hireMe}
               </GsapButton>
             </div>
 

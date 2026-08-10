@@ -84,30 +84,36 @@ export function ContactSection() {
     <section
       ref={ref}
       id="contact"
-      className="relative flex min-h-dvh items-center py-24"
+      className="relative z-10 flex min-h-dvh items-center overflow-hidden py-24 pt-28 md:pt-32"
     >
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl px-6">
         <div className="mb-12 max-w-2xl space-y-3">
           <p
             data-reveal
-            className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground"
+            className="text-sm font-medium uppercase tracking-[0.18em] text-accent-brand"
           >
             {contactCopy.title}
           </p>
-          <h2
+          <h1
             data-reveal
-            className="text-3xl font-semibold tracking-tight md:text-5xl"
+            className="text-balance text-3xl font-bold tracking-tight md:text-5xl"
           >
+            {contactCopy.headline}
+          </h1>
+          <p data-reveal className="text-lg text-muted-foreground">
             {contactCopy.lead}
-          </h2>
+          </p>
         </div>
 
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
           <div data-reveal className="space-y-8">
             <ul className="space-y-5">
               {channels.map((item) => (
                 <li key={item.label} className="flex items-start gap-3">
-                  <item.icon className="mt-0.5 h-5 w-5 text-accent-brand" />
+                  <item.icon
+                    className="mt-0.5 h-5 w-5 shrink-0 text-accent-brand"
+                    strokeWidth={1.75}
+                  />
                   <div>
                     <p className="text-sm text-muted-foreground">{item.label}</p>
                     {item.href ? (
@@ -149,9 +155,9 @@ export function ContactSection() {
 
           <div
             data-reveal
-            className="border border-border/70 bg-background/60 p-6 backdrop-blur-sm md:p-8"
+            className="border border-border/70 bg-background/55 p-6 backdrop-blur-sm md:p-8"
           >
-            <h3 className="mb-6 text-xl font-semibold">{contactCopy.formTitle}</h3>
+            <h2 className="mb-6 text-xl font-semibold">{contactCopy.formTitle}</h2>
 
             {isSubmitted ? (
               <div className="flex flex-col items-start gap-3 py-8">
