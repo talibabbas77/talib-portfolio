@@ -1,0 +1,28 @@
+---
+description: Humanized, CV-grounded portfolio copy standards
+alwaysApply: true
+---
+
+# Portfolio Copy Rules
+
+All headlines, descriptions, buttons, alt text, and metadata must sound like a person wrote them for hiring managers and clients.
+
+## Required
+
+- Ground every claim in real CV facts (roles, products, stacks, outcomes).
+- Prefer short, direct sentences.
+- Headings must carry a clear meaning. No vague labels like "My Journey" or "What I Do Best" unless the body proves it.
+- One CTA label per intent site-wide (e.g. "View work" and "Hire me").
+
+## Banned
+
+- Em dashes (`—`) and en dashes used as flourish. Use a normal hyphen (`-`) or rewrite the sentence.
+- AI filler: "passionate about", "seamless experiences", "leveraging", "cutting-edge", "robust solutions", "digital presence", "bring your ideas to life", "exceptional", "innovative solutions".
+- Ellipsis spam (...), emoji decoration in UI copy, fake stats, placeholder contacts.
+- Synonym stacking and hollow intensifiers.
+
+## Voice
+
+- Specific over generic. Name the product, stack, or result.
+- Confident and plain. No sales-page drama.
+- Match Talib's profile: Full-stack, Next.js, MERN, AI integrations, Shopify, CRM work in Lahore.

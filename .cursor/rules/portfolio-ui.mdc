@@ -1,0 +1,35 @@
+---
+description: Portfolio UI constraints aligned with Taste Skill
+alwaysApply: true
+---
+
+# Portfolio UI Rules
+
+Follow `.agents/skills/design-taste-frontend` (Taste Skill). Site-specific constraints:
+
+## Design dials
+
+- `DESIGN_VARIANCE: 6`
+- `MOTION_INTENSITY: 7`
+- `VISUAL_DENSITY: 4`
+
+## Layout
+
+- One primary section per viewport (`min-h-dvh` + scroll snap).
+- Hero is full-bleed video background. No cards in the hero.
+- Hero budget: brand name, one headline, one supporting sentence, one CTA group.
+- One job per section. Do not repeat skills/projects content across sections.
+- Keep Ubuntu as the UI typeface. Giant footer wordmark uses EB Garamond (`--font-garamond`), uppercase, dull metallic - not neon. Avoid Inter/Roboto/Arial defaults.
+
+## Motion
+
+- Use GSAP + ScrollTrigger for section choreography.
+- Do not mix GSAP and Motion/framer-motion in the same component tree.
+- Honor `prefers-reduced-motion`.
+
+## Visual direction
+
+- No purple-on-white / purple-indigo mesh defaults.
+- No warm cream + terracotta + serif newspaper look.
+- No hero overlays (floating badges, promo chips on media).
+- Atmosphere via video, gradients, or subtle texture. Not flat single-color pages only.

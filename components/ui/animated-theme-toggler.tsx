@@ -1,38 +1,51 @@
-"use client"
+"use client";
 
-import { useCallback, useRef } from "react"
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
-import { flushSync } from "react-dom"
-
-import { cn } from "@/lib/utils"
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { flushSync } from "react-dom";
+import { cn } from "@/lib/utils";
 
 type Props = {
-  className?: string
-}
+  className?: string;
+};
 
 export const AnimatedThemeToggler = ({ className }: Props) => {
-  const { theme, setTheme } = useTheme()
-  const buttonRef = useRef<HTMLButtonElement>(null)
-  const isDark = theme === "dark"
+  const { resolvedTheme, setTheme } = useTheme();
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = resolvedTheme === "dark";
 
   const toggleTheme = useCallback(async () => {
-    if (!buttonRef.current) return
+    if (!buttonRef.current || !mounted) return;
+    const next = isDark ? "light" : "dark";
 
-    await document.startViewTransition(() => {
+    const run = () => {
       flushSync(() => {
-        setTheme(isDark ? "light" : "dark")
-      })
-    }).ready
+        setTheme(next);
+      });
+    };
+
+    if (!document.startViewTransition) {
+      run();
+      return;
+    }
+
+    await document.startViewTransition(run).ready;
 
     const { top, left, width, height } =
-      buttonRef.current.getBoundingClientRect()
-    const x = left + width / 2
-    const y = top + height / 2
+      buttonRef.current.getBoundingClientRect();
+    const x = left + width / 2;
+    const y = top + height / 2;
     const maxRadius = Math.hypot(
       Math.max(left, window.innerWidth - left),
       Math.max(top, window.innerHeight - top)
-    )
+    );
 
     document.documentElement.animate(
       {
@@ -46,12 +59,26 @@ export const AnimatedThemeToggler = ({ className }: Props) => {
         easing: "ease-in-out",
         pseudoElement: "::view-transition-new(root)",
       }
-    )
-  }, [isDark, setTheme])
+    );
+  }, [isDark, mounted, setTheme]);
 
   return (
-    <button ref={buttonRef} onClick={toggleTheme} className={cn(className)}>
-      {isDark ? <Sun /> : <Moon />}
+    <button
+      ref={buttonRef}
+      type="button"
+      aria-label={mounted ? (isDark ? "Switch to light mode" : "Switch to dark mode") : "Toggle theme"}
+      onClick={toggleTheme}
+      className={cn(className)}
+    >
+      {mounted ? (
+        isDark ? (
+          <Sun className="h-4 w-4" />
+        ) : (
+          <Moon className="h-4 w-4" />
+        )
+      ) : (
+        <span className="inline-block h-4 w-4" aria-hidden />
+      )}
     </button>
-  )
-}
+  );
+};

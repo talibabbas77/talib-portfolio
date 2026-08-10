@@ -1,161 +1,91 @@
 "use client";
 
-import { motion } from "motion/react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { TechShowcase } from "@/components/ui/tech-showcase";
-import { Code, Database, Globe, Smartphone, Cloud, Shield, Cpu, GitBranch, File, Search, Settings } from "lucide-react";
-
-
-const skills = [
-    { name: "Frontend Development", icon: Code, description: "React, Next.js, TypeScript, Tailwind CSS" },
-    { name: "Backend Development", icon: Database, description: "Node.js, Express, MongoDB, PostgreSQL" },
-    { name: "Cloud & DevOps", icon: Cloud, description: "AWS, Firebase, Docker, CI/CD" },
-    { name: "Mobile Development", icon: Smartphone, description: "React Native, Progressive Web Apps" },
-];
-
-const achievements = [
-    "7+ Professional Websites Created",
-    "Full-Stack Development Expertise",
-    "Modern JavaScript Frameworks",
-    "Cloud Infrastructure Management",
-    "Responsive Design Specialist",
-    "Performance Optimization Expert"
-];
+import { useEffect, useRef } from "react";
+import { aboutCopy, experience } from "@/lib/site-content";
+import { revealSection } from "@/lib/gsap";
 
 export function AboutSection() {
-    return (
-        <>
-            <section id="about" className="py-20">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                        {/* Left Column - About Content */}
-                        <motion.div
-                            className="space-y-8"
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
-                            viewport={{ once: true }}
-                        >
-                            {/* Section Title */}
-                            <div>
-                                <motion.h2
-                                    className="text-4xl md:text-5xl font-bold text-foreground mb-4"
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.2, duration: 0.8 }}
-                                    viewport={{ once: true }}
-                                >
-                                    About Me
-                                </motion.h2>
-                                <motion.div
-                                    className="w-20 h-1 bg-gradient-to-r from-primary to-primary/60 rounded-full"
-                                    initial={{ opacity: 0, scaleX: 0 }}
-                                    whileInView={{ opacity: 1, scaleX: 1 }}
-                                    transition={{ delay: 0.4, duration: 0.8 }}
-                                    viewport={{ once: true }}
-                                />
-                            </div>
+  const ref = useRef<HTMLElement>(null);
 
-                            {/* About Text */}
-                            <motion.div
-                                className="space-y-6"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.6, duration: 0.8 }}
-                                viewport={{ once: true }}
-                            >
-                                <p className="text-lg text-muted-foreground leading-relaxed">
-                                    I'm a passionate full-stack developer with over 3 years of experience in creating
-                                    exceptional digital experiences. My journey began with a curiosity for how things
-                                    work on the web, and it has evolved into a deep expertise in modern web technologies.
-                                </p>
+  useEffect(() => {
+    revealSection(ref.current);
+  }, []);
 
-                                <p className="text-lg text-muted-foreground leading-relaxed">
-                                    I specialize in building scalable web applications using React, Next.js, and Node.js.
-                                    My approach combines technical excellence with user-centered design, ensuring that
-                                    every project not only functions flawlessly but also provides an intuitive user experience.
-                                </p>
+  return (
+    <section
+      ref={ref}
+      id="about"
+      className="relative flex min-h-dvh items-center py-24"
+    >
+      <div className="mx-auto flex w-full max-w-7xl flex-col justify-center px-4 sm:px-6 lg:px-8">
+        <div className="grid items-start gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+          <div className="space-y-6">
+            <p
+              data-reveal
+              className="text-sm font-medium uppercase tracking-[0.2em] text-accent-brand"
+            >
+              {aboutCopy.title}
+            </p>
+            <h2
+              data-reveal
+              className="max-w-xl text-3xl font-semibold tracking-tight md:text-5xl"
+            >
+              {aboutCopy.lead}
+            </h2>
+            <div className="space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+              {aboutCopy.paragraphs.map((p) => (
+                <p data-reveal key={p.slice(0, 24)}>
+                  {p}
+                </p>
+              ))}
+            </div>
+          </div>
 
-                                <p className="text-lg text-muted-foreground leading-relaxed">
-                                    From e-commerce platforms like AbayaDesigns and HijabKiDunya to educational tools
-                                    like QuizBee, I've helped businesses transform their digital presence and achieve
-                                    their goals through innovative web solutions.
-                                </p>
-                            </motion.div>
-
-                            {/* Skills Grid */}
-                            <motion.div
-                                className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.8, duration: 0.8 }}
-                                viewport={{ once: true }}
-                            >
-                                {skills.map((skill, index) => (
-                                    <motion.div
-                                        key={skill.name}
-                                        className="flex items-start gap-3 p-4 rounded-lg bg-background/50 backdrop-blur-sm border border-border/50 hover:bg-accent/50 transition-colors"
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
-                                        transition={{ delay: 1 + index * 0.1, duration: 0.5 }}
-                                        viewport={{ once: true }}
-                                        whileHover={{ scale: 1.02 }}
-                                    >
-                                        <div className="p-2 rounded-lg bg-primary/10">
-                                            <skill.icon className="w-5 h-5 text-primary" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-semibold text-foreground">{skill.name}</h4>
-                                            <p className="text-sm text-muted-foreground">{skill.description}</p>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </motion.div>
-
-                            {/* Achievements */}
-                            <motion.div
-                                className="pt-6"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 1.2, duration: 0.8 }}
-                                viewport={{ once: true }}
-                            >
-                                <h3 className="text-xl font-semibold text-foreground mb-4">Key Achievements</h3>
-                                <div className="flex flex-wrap gap-2">
-                                    {achievements.map((achievement, index) => (
-                                        <motion.div
-                                            key={achievement}
-                                            initial={{ opacity: 0, scale: 0.8 }}
-                                            whileInView={{ opacity: 1, scale: 1 }}
-                                            transition={{ delay: 1.4 + index * 0.05, duration: 0.3 }}
-                                            viewport={{ once: true }}
-                                        >
-                                            <Badge variant="secondary" className="text-sm">
-                                                {achievement}
-                                            </Badge>
-                                        </motion.div>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        </motion.div>
-
-                        {/* Right Column - Tech Showcase */}
-                        <motion.div
-                            className="flex justify-center lg:justify-end"
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
-                            viewport={{ once: true }}
-                        >
-                            <TechShowcase />
-                        </motion.div>
-                    </div>
+          <div className="space-y-6">
+            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+              {aboutCopy.highlights.map((item) => (
+                <div
+                  data-reveal
+                  key={item.label}
+                  className="group border border-border/60 bg-background/50 p-4 transition-colors hover:border-accent-brand/50 hover:bg-background"
+                >
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                    {item.label}
+                  </p>
+                  <p className="mt-1 text-xl font-semibold transition-colors group-hover:text-accent-brand">
+                    {item.value}
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {item.detail}
+                  </p>
                 </div>
-            </section>
+              ))}
+            </div>
 
-            {/* Separator */}
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-        </>
-    );
+            <div data-reveal className="space-y-1">
+              <p className="mb-3 text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                Experience
+              </p>
+              {experience.map((job) => (
+                <div
+                  key={job.company}
+                  className="group flex flex-col gap-1 border-b border-border/60 py-3 transition-colors last:border-0 hover:border-accent-brand/40"
+                >
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <p className="font-semibold group-hover:text-accent-brand">
+                      {job.role}
+                    </p>
+                    <p className="text-sm text-muted-foreground">{job.period}</p>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {job.company} · {job.location}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

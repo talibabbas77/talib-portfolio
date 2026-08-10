@@ -1,313 +1,179 @@
 "use client";
 
-import { motion } from "motion/react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
+import { SiGithub, SiUpwork } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa6";
 import {
-    Mail,
-    Phone,
-    MapPin,
-    Github,
-    Linkedin,
-    Twitter,
-    Instagram,
-    ArrowUp,
-    Heart,
-    Code,
-    Palette,
-    Zap,
-    Globe,
-    Calendar,
-    Clock,
-    CheckCircle,
-    ExternalLink
-} from "lucide-react";
-import { useState, useEffect } from "react";
+  ctaLabels,
+  navItems,
+  siteConfig,
+  socialLinks,
+} from "@/lib/site-content";
+import { GsapButton } from "@/components/ui/gsap-button";
 
-const socialLinks = [
-    { name: "GitHub", icon: Github, href: "#", color: "hover:text-gray-900 dark:hover:text-gray-100", bgColor: "hover:bg-gray-100 dark:hover:bg-gray-800" },
-    { name: "LinkedIn", icon: Linkedin, href: "#", color: "hover:text-blue-600", bgColor: "hover:bg-blue-50 dark:hover:bg-blue-900/20" },
-    { name: "Twitter", icon: Twitter, href: "#", color: "hover:text-blue-400", bgColor: "hover:bg-blue-50 dark:hover:bg-blue-900/20" },
-    { name: "Instagram", icon: Instagram, href: "#", color: "hover:text-pink-500", bgColor: "hover:bg-pink-50 dark:hover:bg-pink-900/20" }
-];
-
-const quickLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Projects", href: "#projects" },
-    { name: "Skills", href: "#skills" },
-    { name: "Contact", href: "#contact" }
-];
-
-const services = [
-    { name: "Web Development", icon: Code },
-    { name: "UI/UX Design", icon: Palette },
-    { name: "Mobile Apps", icon: Zap },
-    { name: "Consulting", icon: Globe }
-];
-
-const contactInfo = [
-    { icon: Mail, label: "Email", value: "talib@example.com", href: "mailto:talib@example.com" },
-    { icon: Phone, label: "Phone", value: "+1 (555) 123-4567", href: "tel:+15551234567" },
-    { icon: MapPin, label: "Location", value: "United States", href: "#" }
-];
+const SOCIAL_ICONS = {
+  GitHub: SiGithub,
+  LinkedIn: FaLinkedin,
+  Upwork: SiUpwork,
+} as const;
 
 export function Footer() {
-    const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+  useEffect(() => {
+    const onScroll = () => setIsVisible(window.scrollY > 400);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-    const handleScroll = () => {
-        const scrollTop = window.pageYOffset;
-        setIsVisible(scrollTop > 300);
-    };
+  const scrollTo = (id: string) => {
+    if (id === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
-    // Add scroll listener
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    return (
-        <footer className="relative border-t border-border/50 bg-background/50 backdrop-blur-sm">
-            {/* Scroll to Top Button */}
-            <motion.button
-                onClick={scrollToTop}
-                className={`fixed bottom-8 right-8 z-50 p-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
-                    }`}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
-                transition={{ duration: 0.3 }}
-            >
-                <ArrowUp className="w-5 h-5" />
-            </motion.button>
-
-            <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                {/* Main Footer Content */}
-                <div className="py-16">
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-                        {/* Brand Section */}
-                        <motion.div
-                            className="lg:col-span-1"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                            viewport={{ once: true }}
-                        >
-                            <div className="space-y-6">
-                                <div>
-                                    <h3 className="text-2xl font-bold text-foreground mb-2">Talib Abbas</h3>
-                                    <p className="text-muted-foreground leading-relaxed">
-                                        Full-stack developer passionate about creating exceptional digital experiences
-                                        and innovative web solutions.
-                                    </p>
-                                </div>
-
-                                {/* Status Badge */}
-                                <div className="flex items-center gap-2">
-                                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                                    <span className="text-sm font-medium text-foreground">
-                                        Available for new projects
-                                    </span>
-                                </div>
-
-                                {/* Social Links */}
-                                <div className="space-y-3">
-                                    <h4 className="text-sm font-semibold text-foreground">Follow Me</h4>
-                                    <div className="flex gap-3">
-                                        {socialLinks.map((social, index) => (
-                                            <motion.a
-                                                key={social.name}
-                                                href={social.href}
-                                                className={`p-3 rounded-lg border border-border/50 bg-background/50 backdrop-blur-sm transition-all duration-300 ${social.bgColor} ${social.color}`}
-                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                whileInView={{ opacity: 1, scale: 1 }}
-                                                transition={{ delay: index * 0.1, duration: 0.3 }}
-                                                viewport={{ once: true }}
-                                                whileHover={{ scale: 1.05, y: -2 }}
-                                                whileTap={{ scale: 0.95 }}
-                                            >
-                                                <social.icon className="w-5 h-5" />
-                                            </motion.a>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* Quick Links */}
-                        <motion.div
-                            className="lg:col-span-1"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2, duration: 0.8 }}
-                            viewport={{ once: true }}
-                        >
-                            <div className="space-y-6">
-                                <h4 className="text-lg font-semibold text-foreground">Quick Links</h4>
-                                <nav className="space-y-3">
-                                    {quickLinks.map((link, index) => (
-                                        <motion.a
-                                            key={link.name}
-                                            href={link.href}
-                                            className="block text-muted-foreground hover:text-foreground transition-colors duration-300 group"
-                                            initial={{ opacity: 0, x: -20 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
-                                            viewport={{ once: true }}
-                                            whileHover={{ x: 5 }}
-                                        >
-                                            <span className="relative">
-                                                {link.name}
-                                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-                                            </span>
-                                        </motion.a>
-                                    ))}
-                                </nav>
-                            </div>
-                        </motion.div>
-
-                        {/* Services */}
-                        <motion.div
-                            className="lg:col-span-1"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4, duration: 0.8 }}
-                            viewport={{ once: true }}
-                        >
-                            <div className="space-y-6">
-                                <h4 className="text-lg font-semibold text-foreground">Services</h4>
-                                <div className="space-y-3">
-                                    {services.map((service, index) => (
-                                        <motion.div
-                                            key={service.name}
-                                            className="flex items-center gap-3 p-3 rounded-lg bg-background/50 backdrop-blur-sm border border-border/50 hover:border-border transition-all duration-300 group"
-                                            initial={{ opacity: 0, x: -20 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
-                                            viewport={{ once: true }}
-                                            whileHover={{ scale: 1.02, x: 5 }}
-                                        >
-                                            <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
-                                                <service.icon className="w-4 h-4 text-primary" />
-                                            </div>
-                                            <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-300">
-                                                {service.name}
-                                            </span>
-                                        </motion.div>
-                                    ))}
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* Contact Info */}
-                        <motion.div
-                            className="lg:col-span-1"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.6, duration: 0.8 }}
-                            viewport={{ once: true }}
-                        >
-                            <div className="space-y-6">
-                                <h4 className="text-lg font-semibold text-foreground">Get In Touch</h4>
-                                <div className="space-y-4">
-                                    {contactInfo.map((info, index) => (
-                                        <motion.a
-                                            key={info.label}
-                                            href={info.href}
-                                            className="flex items-start gap-3 p-3 rounded-lg bg-background/50 backdrop-blur-sm border border-border/50 hover:border-border transition-all duration-300 group"
-                                            initial={{ opacity: 0, x: -20 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: 0.7 + index * 0.1, duration: 0.5 }}
-                                            viewport={{ once: true }}
-                                            whileHover={{ scale: 1.02, x: 5 }}
-                                        >
-                                            <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
-                                                <info.icon className="w-4 h-4 text-primary" />
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-300">
-                                                    {info.label}
-                                                </p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    {info.value}
-                                                </p>
-                                            </div>
-                                        </motion.a>
-                                    ))}
-                                </div>
-
-                                {/* Availability Status */}
-                                <motion.div
-                                    className="p-4 rounded-lg bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20"
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: 1, duration: 0.5 }}
-                                    viewport={{ once: true }}
-                                >
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <CheckCircle className="w-4 h-4 text-green-500" />
-                                        <span className="text-sm font-semibold text-foreground">Available</span>
-                                    </div>
-                                    <p className="text-xs text-muted-foreground">
-                                        Response time: within 24 hours
-                                    </p>
-                                </motion.div>
-                            </div>
-                        </motion.div>
-                    </div>
+  return (
+    <footer className="relative z-0 mt-10 w-full">
+      <div className="w-full overflow-hidden rounded-t-[2rem] border border-b-0 border-border/60 bg-background shadow-[0_-24px_70px_-40px_rgba(15,110,86,0.3)] sm:rounded-t-[2.5rem]">
+        <div className="mx-auto max-w-7xl px-4 pb-12 pt-14 sm:px-8 sm:pt-16 lg:px-12 lg:pt-20">
+          <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+            <div className="space-y-6">
+              <div className="flex min-w-0 items-center gap-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-[var(--accent-brand)] text-sm font-bold text-white dark:text-[#06110c]">
+                  TA
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+                    {siteConfig.name}
+                  </p>
+                  <p className="text-sm text-muted-foreground">{siteConfig.role}</p>
                 </div>
-
-                {/* Bottom Bar */}
-                <motion.div
-                    className="py-8 border-t border-border/50"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8, duration: 0.8 }}
-                    viewport={{ once: true }}
-                >
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <span>© {new Date().getFullYear()} Talib Abbas. Made with</span>
-                            <motion.div
-                                animate={{ scale: [1, 1.2, 1] }}
-                                transition={{ duration: 1, repeat: Infinity }}
-                            >
-                                <Heart className="w-4 h-4 text-red-500 fill-current" />
-                            </motion.div>
-                        </div>
-
-                        <div className="flex items-center gap-6 text-sm">
-                            <motion.a
-                                href="#privacy"
-                                className="text-muted-foreground hover:text-foreground transition-colors duration-300"
-                                whileHover={{ y: -2 }}
-                            >
-                                Privacy Policy
-                            </motion.a>
-                            <motion.a
-                                href="#terms"
-                                className="text-muted-foreground hover:text-foreground transition-colors duration-300"
-                                whileHover={{ y: -2 }}
-                            >
-                                Terms of Service
-                            </motion.a>
-                            <motion.a
-                                href="#sitemap"
-                                className="text-muted-foreground hover:text-foreground transition-colors duration-300"
-                                whileHover={{ y: -2 }}
-                            >
-                                Sitemap
-                            </motion.a>
-                        </div>
-                    </div>
-                </motion.div>
+              </div>
+              <p className="max-w-md text-base leading-relaxed text-muted-foreground">
+                {siteConfig.tagline}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {siteConfig.availability}
+              </p>
+              <GsapButton
+                variant="brand"
+                size="md"
+                onClick={() => scrollTo("contact")}
+              >
+                {ctaLabels.bookCall}
+              </GsapButton>
             </div>
-        </footer>
-    );
+
+            <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-10">
+              <div>
+                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-accent-brand">
+                  Navigate
+                </p>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  {navItems.map((item) => (
+                    <li key={item.name}>
+                      <button
+                        type="button"
+                        onClick={() => scrollTo(item.href.replace("#", ""))}
+                        className="cursor-pointer transition-colors hover:text-foreground"
+                      >
+                        {item.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-accent-brand">
+                  Connect
+                </p>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  {socialLinks.map((link) => {
+                    const Icon =
+                      SOCIAL_ICONS[link.name as keyof typeof SOCIAL_ICONS];
+                    return (
+                      <li key={link.name}>
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
+                        >
+                          {Icon ? <Icon className="h-3.5 w-3.5" /> : null}
+                          {link.name}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+
+              <div className="sm:col-span-1">
+                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-accent-brand">
+                  Contact
+                </p>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li>
+                    <a
+                      href={`mailto:${siteConfig.email}`}
+                      className="inline-flex max-w-full items-start gap-2 break-all transition-colors hover:text-foreground"
+                    >
+                      <Mail className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent-brand" />
+                      {siteConfig.email}
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
+                      className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
+                    >
+                      <Phone className="h-3.5 w-3.5 shrink-0 text-accent-brand" />
+                      {siteConfig.phoneDisplay}
+                    </a>
+                  </li>
+                  <li className="inline-flex items-center gap-2">
+                    <MapPin className="h-3.5 w-3.5 shrink-0 text-accent-brand" />
+                    {siteConfig.location}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-14 flex flex-col justify-between gap-3 border-t border-border/50 pt-6 text-sm text-muted-foreground sm:flex-row sm:items-center">
+            <p className="min-w-0">
+              © 2026 {siteConfig.name}. Built with
+              Next.js.
+            </p>
+            <p className="shrink-0">Lahore · Remote-friendly</p>
+          </div>
+        </div>
+
+        <div className="relative w-full overflow-hidden border-t border-border/40 px-2 pb-1 pt-8 sm:px-6 sm:pb-2 sm:pt-10">
+          <p
+            aria-hidden="true"
+            className="footer-wordmark-text select-none text-center text-[clamp(4.5rem,22vw,14rem)] font-normal leading-[0.85] tracking-[0.28em] sm:tracking-[0.34em]"
+          >
+            TALIB
+          </p>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        aria-label="Back to top"
+        onClick={() => scrollTo("home")}
+        className={`fixed bottom-5 right-4 z-50 rounded-md border border-border bg-background p-3 shadow-sm transition-opacity sm:bottom-8 sm:right-8 ${
+          isVisible ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      >
+        <ArrowUp className="h-4 w-4" />
+      </button>
+    </footer>
+  );
 }
