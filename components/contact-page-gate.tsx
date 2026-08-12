@@ -44,7 +44,7 @@ export function ContactPageGate() {
 
   return (
     <div className="relative z-10 flex min-h-dvh flex-col bg-[#121212] text-[#e5e7eb]">
-      <header className="px-6 py-5 sm:px-8">
+      <header className="safe-top px-4 py-4 sm:px-8 sm:py-5">
         <Link
           href="/"
           className="text-sm font-semibold text-[#9ca3af] transition-colors hover:text-white"
@@ -53,8 +53,9 @@ export function ContactPageGate() {
         </Link>
       </header>
 
-      <div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
-        <TurnstileWidget
+      <div className="flex flex-1 flex-col items-center justify-center px-4 py-10 sm:px-6 sm:py-12">
+        <div className="w-full max-w-[360px]">
+          <TurnstileWidget
           action="contact_page"
           theme="light"
           onVerify={handleVerify}
@@ -64,6 +65,7 @@ export function ContactPageGate() {
             setError("Verification failed to load. Refresh and try again.");
           }}
         />
+        </div>
 
         {verifying ? (
           <p className="mt-4 text-sm text-[#9ca3af]">Verifying...</p>
@@ -76,7 +78,7 @@ export function ContactPageGate() {
         ) : null}
       </div>
 
-      <footer className="px-6 pb-8 text-center text-[11px] leading-relaxed text-[#6b7280] sm:pb-10">
+      <footer className="safe-bottom px-4 pb-[max(2rem,env(safe-area-inset-bottom))] text-center text-[11px] leading-relaxed text-[#6b7280] sm:px-6 sm:pb-10">
         <p>Performance and security by Cloudflare Turnstile</p>
         <p className="mt-2">
           © {year} {siteConfig.name}

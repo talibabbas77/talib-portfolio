@@ -8,7 +8,7 @@ export default function AdminLoginPage() {
   const configured = isSupabaseConfigured();
 
   return (
-    <div className="flex min-h-dvh items-center justify-center px-4 py-12">
+    <div className="safe-top flex min-h-dvh items-center justify-center px-4 py-12 pb-[max(3rem,env(safe-area-inset-bottom))]">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-accent-brand">

@@ -216,16 +216,19 @@ export function ContactForm({
         ) : null}
 
         <div className="space-y-4 border-t border-border/60 pt-4">
-          <TurnstileWidget
-            ref={turnstileRef}
-            action="contact_submit"
-            onVerify={handleTurnstileVerify}
-            onExpire={handleTurnstileExpire}
-            onError={() => {
-              setTurnstileToken(null);
-              setError("Verification failed to load. Refresh and try again.");
-            }}
-          />
+          <div className="flex justify-center sm:justify-start">
+            <TurnstileWidget
+              ref={turnstileRef}
+              action="contact_submit"
+              onVerify={handleTurnstileVerify}
+              onExpire={handleTurnstileExpire}
+              onError={() => {
+                setTurnstileToken(null);
+                setError("Verification failed to load. Refresh and try again.");
+              }}
+              className="mx-auto sm:mx-0"
+            />
+          </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs font-medium text-muted-foreground">

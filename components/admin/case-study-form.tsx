@@ -89,7 +89,7 @@ export function CaseStudyForm({ initial, mode }: CaseStudyFormProps) {
         </Link>
       </div>
 
-      <div className="glass-panel space-y-5 rounded-xl p-6">
+      <div className="glass-panel space-y-5 rounded-xl p-4 sm:p-6">
         <InputBlock label="Title" value={form.title} onChange={(title) => setForm((p) => ({ ...p, title, slug: p.slug || slugify(title) }))} />
         <InputBlock label="Slug" value={form.slug} onChange={(slug) => setForm((p) => ({ ...p, slug }))} />
         <div className="grid gap-4 sm:grid-cols-2">

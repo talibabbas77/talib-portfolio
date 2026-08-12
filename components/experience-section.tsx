@@ -15,7 +15,7 @@ export function ExperienceSection() {
     <section
       ref={ref}
       id="experience"
-      className="relative flex min-h-dvh items-center py-24"
+      className="relative flex min-h-0 items-center py-16 sm:min-h-dvh sm:py-24"
     >
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 max-w-2xl space-y-3">
@@ -38,7 +38,7 @@ export function ExperienceSection() {
             <li
               data-reveal
               key={`${role.company}-${role.period}`}
-              className="grid gap-6 border-t border-border/60 pt-8 lg:grid-cols-[280px_1fr] lg:gap-12"
+              className="grid gap-4 border-t border-border/60 pt-6 sm:gap-6 sm:pt-8 lg:grid-cols-[minmax(0,17.5rem)_1fr] lg:gap-12"
             >
               <div className="space-y-2">
                 <p className="text-lg font-semibold text-foreground">

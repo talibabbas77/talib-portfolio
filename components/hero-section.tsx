@@ -6,7 +6,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative h-dvh min-h-dvh overflow-hidden"
+      className="relative min-h-dvh overflow-x-clip"
     >
       <HeroFuturistic />
     </section>

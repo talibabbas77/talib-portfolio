@@ -42,10 +42,10 @@ export function ContactSection() {
     <section
       ref={ref}
       id="contact"
-      className="relative z-10 flex min-h-dvh items-center overflow-hidden py-24 pt-28 md:pt-32"
+      className="relative z-10 flex min-h-0 items-center py-16 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] sm:min-h-dvh sm:py-24 sm:pt-32"
     >
-      <div className="mx-auto w-full max-w-6xl px-6">
-        <div className="mb-12 max-w-2xl space-y-3">
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-8 max-w-2xl space-y-3 sm:mb-12">
           <p
             data-reveal
             className="text-sm font-medium uppercase tracking-[0.18em] text-accent-brand"
@@ -54,7 +54,7 @@ export function ContactSection() {
           </p>
           <h1
             data-reveal
-            className="text-balance text-3xl font-bold tracking-tight md:text-5xl"
+            className="text-balance text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
           >
             {contactCopy.headline}
           </h1>
@@ -63,8 +63,8 @@ export function ContactSection() {
           </p>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
-          <div data-reveal className="space-y-8">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+          <div data-reveal className="min-w-0 space-y-8">
             <ul className="space-y-5">
               {channels.map((item) => (
                 <li key={item.label} className="flex items-start gap-3">
@@ -72,12 +72,12 @@ export function ContactSection() {
                     className="mt-0.5 h-5 w-5 shrink-0 text-accent-brand"
                     strokeWidth={1.75}
                   />
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-sm text-muted-foreground">{item.label}</p>
                     {item.href ? (
                       <a
                         href={item.href}
-                        className="font-medium underline-offset-4 hover:underline"
+                        className="break-all font-medium underline-offset-4 hover:underline"
                       >
                         {item.value}
                       </a>
@@ -113,7 +113,7 @@ export function ContactSection() {
 
           <div
             data-reveal
-            className="glass-panel border border-border/70 p-6 md:p-8"
+            className="glass-panel min-w-0 border border-border/70 p-4 sm:p-6 md:p-8"
           >
             <ContactForm idPrefix="page-contact" />
           </div>

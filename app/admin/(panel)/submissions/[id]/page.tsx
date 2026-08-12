@@ -59,7 +59,7 @@ export default async function AdminSubmissionPage({
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">Email</p>
             <a
               href={`mailto:${submission.email}?subject=${encodeURIComponent(`Re: ${submission.subject}`)}`}
-              className="mt-2 inline-flex items-center gap-2 font-bold text-accent-brand hover:underline"
+              className="mt-2 inline-flex max-w-full items-center gap-2 break-all font-bold text-accent-brand hover:underline"
             >
               <Mail className="h-4 w-4" strokeWidth={1.75} />
               {submission.email}

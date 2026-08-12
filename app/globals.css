@@ -144,6 +144,7 @@
     @apply bg-transparent text-foreground antialiased;
     font-family: var(--font-ubuntu), Ubuntu, ui-sans-serif, system-ui, sans-serif;
     overflow-x: clip;
+    min-width: 0;
   }
 
   ::selection {
@@ -201,6 +202,52 @@
 
   .dark .editorial-prose p {
     color: color-mix(in oklab, var(--foreground) 78%, transparent);
+  }
+
+  .editorial-prose img,
+  .prose img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .editorial-prose pre,
+  .prose pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .editorial-prose table,
+  .prose table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .page-gutter {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .safe-top {
+    padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+  }
+
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--foreground) 22%, transparent) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--foreground) 22%, transparent);
   }
 
   .text-accent-brand {

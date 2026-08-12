@@ -33,11 +33,11 @@ export function EditorialIndex({
   const rows = rest.slice(2);
 
   return (
-    <div className="editorial relative z-10 pb-24 pt-28">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="border-y border-border py-6">
+    <div className="editorial relative z-10 pb-16 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] sm:pb-24 sm:pt-28">
+      <div className="page-gutter">
+        <div className="border-y border-border py-5 sm:py-6">
           <EditorialKicker>{kicker}</EditorialKicker>
-          <h1 className="mt-3 font-display text-4xl font-medium tracking-tight text-foreground sm:text-5xl md:text-6xl">
+          <h1 className="mt-3 font-display text-[clamp(1.875rem,6vw,3.75rem)] font-medium tracking-tight text-foreground">
             {title}
           </h1>
           <p className="mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">

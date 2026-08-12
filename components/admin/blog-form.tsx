@@ -88,7 +88,7 @@ export function BlogForm({ initial, mode }: BlogFormProps) {
         </Link>
       </div>
 
-      <div className="glass-panel space-y-5 rounded-xl p-6">
+      <div className="glass-panel space-y-5 rounded-xl p-4 sm:p-6">
         <Field label="Title">
           <input
             value={form.title}

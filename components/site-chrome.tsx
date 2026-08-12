@@ -14,9 +14,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="relative z-10">
+    <div className="relative z-10 min-w-0 overflow-x-clip">
       <Navbar />
-      <main>{children}</main>
+      <main className="min-w-0">{children}</main>
       <Footer />
     </div>
   );

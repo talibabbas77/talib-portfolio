@@ -29,11 +29,11 @@ export function ArticleShell({
   className,
 }: ArticleShellProps) {
   return (
-    <div className={cn("editorial relative z-10 pb-24 pt-28", className)}>
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className={cn("editorial relative z-10 pb-16 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] sm:pb-24 sm:pt-28", className)}>
+      <div className="page-gutter">
         <Link
           href={backHref}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="inline-flex max-w-full items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           {backLabel}
@@ -41,7 +41,7 @@ export function ArticleShell({
 
         <header className="mt-10 max-w-3xl">
           <EditorialKicker>{kicker}</EditorialKicker>
-          <h1 className="mt-4 font-display text-4xl font-medium leading-[1.12] tracking-tight text-foreground sm:text-5xl md:text-6xl">
+          <h1 className="mt-4 font-display text-[clamp(1.875rem,6vw,3.75rem)] font-medium leading-[1.12] tracking-tight text-foreground">
             {title}
           </h1>
           <EditorialByline className="mt-5">{meta}</EditorialByline>
@@ -51,15 +51,15 @@ export function ArticleShell({
 
         <div
           className={cn(
-            "mt-10 grid gap-12",
+            "mt-8 grid gap-10 sm:mt-10 sm:gap-12",
             aside && "lg:grid-cols-[minmax(0,1fr)_240px] lg:gap-16"
           )}
         >
-          <div className="editorial-prose max-w-[65ch] space-y-5 text-[1.05rem] leading-relaxed text-muted-foreground">
+          <div className="editorial-prose min-w-0 max-w-[65ch] space-y-5 text-base leading-relaxed text-muted-foreground sm:text-[1.05rem]">
             {children}
           </div>
           {aside ? (
-            <aside className="space-y-6 text-sm text-muted-foreground lg:pt-1">
+            <aside className="min-w-0 space-y-6 border-t border-border/60 pt-8 text-sm text-muted-foreground lg:border-t-0 lg:pt-1">
               {aside}
             </aside>
           ) : null}

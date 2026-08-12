@@ -22,9 +22,9 @@ export type GsapButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const sizeClasses: Record<GsapButtonSize, string> = {
-  sm: 'h-9 min-w-[7.5rem] px-4 text-xs',
-  md: 'h-11 min-w-[9rem] px-5 text-sm',
-  lg: 'h-12 min-w-[10rem] px-6 text-sm',
+  sm: 'h-9 min-w-0 px-4 text-xs sm:min-w-[7.5rem]',
+  md: 'h-11 min-w-0 px-5 text-sm sm:min-w-[9rem]',
+  lg: 'h-12 min-w-0 px-5 text-sm sm:min-w-[10rem] sm:px-6',
 };
 
 const variantClasses: Record<GsapButtonVariant, string> = {

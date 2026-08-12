@@ -71,7 +71,7 @@ export function Footer() {
               </GsapButton>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-10">
+            <div className="grid grid-cols-1 gap-8 min-[480px]:grid-cols-2 lg:grid-cols-3 lg:gap-10">
               <div>
                 <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-accent-brand">
                   Navigate
@@ -115,7 +115,7 @@ export function Footer() {
                 </ul>
               </div>
 
-              <div className="sm:col-span-1">
+              <div className="min-[480px]:col-span-2 lg:col-span-1">
                 <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-accent-brand">
                   Contact
                 </p>
@@ -167,7 +167,7 @@ export function Footer() {
         aria-label="Back to top"
         onClick={goHomeTop}
         className={cn(
-          "glass-panel fixed bottom-5 right-4 z-50 rounded-lg p-3 transition-opacity sm:bottom-8 sm:right-8",
+          "glass-panel fixed bottom-5 right-4 z-50 rounded-lg p-3 transition-opacity max-sm:bottom-[max(1.25rem,env(safe-area-inset-bottom))] sm:bottom-8 sm:right-8",
           isVisible ? "opacity-100" : "pointer-events-none opacity-0"
         )}
       >

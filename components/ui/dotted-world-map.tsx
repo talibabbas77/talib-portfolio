@@ -96,7 +96,7 @@ export function DottedMapBand({ className }: { className?: string }) {
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent-brand">
             Coverage
           </p>
-          <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl">
+          <h2 className="mt-3 max-w-2xl text-[clamp(1.75rem,5vw,2.25rem)] font-semibold tracking-tight">
             Built to collaborate across the map
           </h2>
           <p className="mt-3 max-w-xl text-muted-foreground">

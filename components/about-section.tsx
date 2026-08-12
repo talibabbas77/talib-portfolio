@@ -15,7 +15,7 @@ export function AboutSection() {
     <section
       ref={ref}
       id="about"
-      className="relative flex min-h-dvh items-center py-24"
+      className="relative flex min-h-0 items-center py-16 sm:min-h-dvh sm:py-24"
     >
       <div className="mx-auto flex w-full max-w-7xl flex-col justify-center px-4 sm:px-6 lg:px-8">
         <div className="grid items-start gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
@@ -42,7 +42,7 @@ export function AboutSection() {
           </div>
 
           <div className="space-y-6">
-            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:grid-cols-1">
               {aboutCopy.highlights.map((item) => (
                 <div
                   data-reveal

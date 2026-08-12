@@ -37,7 +37,7 @@ export function BentoShowcase({ className }: { className?: string }) {
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent-brand">
             Explore
           </p>
-          <h2 className="mt-3 max-w-xl text-3xl font-semibold tracking-tight md:text-4xl">
+          <h2 className="mt-3 max-w-xl text-[clamp(1.75rem,5vw,2.25rem)] font-semibold tracking-tight">
             Find the detail that matters for your hire
           </h2>
         </SoftReveal>

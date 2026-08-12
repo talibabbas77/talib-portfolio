@@ -19,7 +19,7 @@ export function ProjectsSection() {
     <section
       ref={ref}
       id="projects"
-      className="relative flex min-h-dvh items-center overflow-hidden py-24"
+      className="relative flex min-h-0 items-center overflow-hidden py-16 sm:min-h-dvh sm:py-24"
     >
       <div className="mx-auto flex w-full max-w-7xl flex-col justify-center px-4 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4 md:mb-8">

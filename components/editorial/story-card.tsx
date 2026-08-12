@@ -38,7 +38,7 @@ export function StoryCard({
         className={cn(
           "mt-3 font-display font-medium tracking-tight text-foreground transition-colors group-hover:text-accent-brand",
           featured
-            ? "text-3xl leading-[1.15] sm:text-4xl md:text-5xl"
+            ? "text-[clamp(1.5rem,5vw,3rem)] leading-[1.15]"
             : "text-xl leading-snug sm:text-2xl"
         )}
       >

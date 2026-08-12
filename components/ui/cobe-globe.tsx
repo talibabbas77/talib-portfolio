@@ -171,7 +171,7 @@ const LEGEND = [
 export function GlobeReachSection({ className }: { className?: string }) {
   return (
     <section id="reach" className={cn("relative py-16 md:py-20", className)}>
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.05fr] lg:gap-12 lg:px-8">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_1.05fr] lg:gap-12 lg:px-8">
         <SoftReveal>
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent-brand">
             Remote reach
@@ -183,7 +183,7 @@ export function GlobeReachSection({ className }: { className?: string }) {
             Markers cover large hubs where I support remote delivery: SaaS,
             Shopify, CRM automation, and AI features.
           </p>
-          <ul className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4">
+          <ul className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 min-[420px]:grid-cols-2 sm:mt-8">
             {LEGEND.map((m) => (
               <li key={m.label} className="border-l border-accent-brand/50 pl-3">
                 <p className="text-sm font-semibold text-foreground">{m.label}</p>

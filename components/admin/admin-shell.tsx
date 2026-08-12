@@ -49,7 +49,7 @@ export function StatusBadge({ status }: { status: string }) {
 
 export function AdminTable({ children }: { children: React.ReactNode }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-border/60">
+    <div className="-mx-4 overflow-x-auto rounded-xl border border-border/60 sm:mx-0">
       {children}
     </div>
   );

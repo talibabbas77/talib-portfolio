@@ -37,7 +37,7 @@ export function Navbar() {
   }, [pathname]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
+    <header className="safe-top fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
       <div
         className={cn(
           "glass-nav mx-auto flex h-[3.75rem] max-w-6xl items-center gap-2 rounded-xl px-2 pl-2.5 pr-2 transition-all duration-300 sm:gap-3 sm:pl-3 sm:pr-2.5",
@@ -108,7 +108,7 @@ export function Navbar() {
       </div>
 
       {open ? (
-        <div className="glass-nav glass-nav-scrolled mx-auto mt-2 max-w-6xl overflow-hidden rounded-xl p-2 lg:hidden">
+        <div className="glass-nav glass-nav-scrolled mx-auto mt-2 max-h-[calc(100dvh-5.5rem)] max-w-6xl overflow-y-auto overscroll-contain rounded-xl p-2 lg:hidden">
           <ul className="flex flex-col gap-1">
             {navItems.map((item) => {
               const active = isNavActive(pathname, item.href);

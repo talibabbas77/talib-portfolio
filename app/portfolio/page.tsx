@@ -24,13 +24,13 @@ export const metadata: Metadata = {
 
 export default function PortfolioPage() {
   return (
-    <div className="relative z-10 pt-28 pb-16">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="relative z-10 pb-16 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] sm:pb-20 sm:pt-28">
+      <div className="page-gutter">
         <SoftReveal>
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent-brand">
             Portfolio
           </p>
-          <h1 className="mt-3 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
+          <h1 className="mt-3 max-w-2xl text-[clamp(2rem,6vw,3rem)] font-semibold tracking-tight">
             Products you can open today
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-muted-foreground">

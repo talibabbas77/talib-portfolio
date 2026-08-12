@@ -180,8 +180,32 @@ export function StackGraph({ className }: { className?: string }) {
           </SoftReveal>
 
           <SoftReveal delay={40}>
-            <div className="mt-6 grid items-start gap-6 lg:grid-cols-[11rem_1fr] lg:gap-10 xl:grid-cols-[13rem_1fr]">
-              <ol className="relative h-80 border-l border-border/60 lg:h-96">
+            <div className="mt-6 space-y-4 lg:space-y-0 lg:grid lg:items-start lg:gap-10 lg:grid-cols-[11rem_1fr] xl:grid-cols-[13rem_1fr]">
+              <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 scrollbar-thin lg:hidden">
+                {STEPS.map((item, index) => {
+                  const isActive = index === active;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => goToStep(index)}
+                      aria-current={isActive ? "step" : undefined}
+                      className={cn(
+                        "shrink-0 rounded-full border px-3 py-1.5 text-left transition-colors",
+                        isActive
+                          ? "border-accent-brand bg-accent-brand/10 text-foreground"
+                          : "border-border/60 text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      <span className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-accent-brand">
+                        {item.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <ol className="relative hidden h-80 border-l border-border/60 lg:block lg:h-96">
                 {STEPS.map((item, index) => {
                   const isActive = index === active;
                   const isDone = index < active;
@@ -228,7 +252,7 @@ export function StackGraph({ className }: { className?: string }) {
                 })}
               </ol>
 
-              <div className="flex h-80 flex-col overflow-hidden rounded-md border border-border/40 bg-background/20 p-5 sm:p-6 lg:h-96">
+              <div className="flex min-h-[18rem] flex-col overflow-hidden rounded-md border border-border/40 bg-background/20 p-4 sm:min-h-[20rem] sm:p-6 lg:min-h-[24rem] lg:h-96">
                 <div className="shrink-0">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-brand">
                     Step {active + 1} of {STEPS.length}
@@ -270,19 +294,19 @@ export function StackGraph({ className }: { className?: string }) {
                   </div>
                 </div>
 
-                <div className="mt-3 flex shrink-0 items-center justify-between gap-4 border-t border-border/50 pt-4">
+                <div className="mt-3 flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-border/50 pt-4 sm:flex-nowrap sm:gap-4">
                   {prev ? (
                     <button
                       type="button"
                       onClick={() => goToStep(active - 1)}
-                      className="group inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      className="group inline-flex min-w-0 max-w-[45%] items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground sm:max-w-none"
                     >
                       <ChevronLeft
-                        className="h-4 w-4 transition-transform group-hover:-translate-x-0.5"
+                        className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-x-0.5"
                         strokeWidth={1.75}
                       />
-                      <span>
-                        <span className="block text-[10px] uppercase tracking-[0.14em] opacity-70">
+                      <span className="min-w-0 truncate">
+                        <span className="hidden text-[10px] uppercase tracking-[0.14em] opacity-70 sm:block">
                           Back
                         </span>
                         <span className="font-medium text-foreground/90">
@@ -291,10 +315,10 @@ export function StackGraph({ className }: { className?: string }) {
                       </span>
                     </button>
                   ) : (
-                    <span />
+                    <span className="shrink-0" />
                   )}
 
-                  <div className="flex items-center gap-1.5" aria-hidden>
+                  <div className="flex shrink-0 items-center gap-1.5" aria-hidden>
                     {STEPS.map((item, index) => (
                       <span
                         key={item.id}
@@ -312,10 +336,10 @@ export function StackGraph({ className }: { className?: string }) {
                     <button
                       type="button"
                       onClick={() => goToStep(active + 1)}
-                      className="group inline-flex items-center gap-1.5 text-right text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      className="group inline-flex min-w-0 max-w-[45%] items-center justify-end gap-1.5 text-right text-sm text-muted-foreground transition-colors hover:text-foreground sm:max-w-none"
                     >
-                      <span>
-                        <span className="block text-[10px] uppercase tracking-[0.14em] opacity-70">
+                      <span className="min-w-0 truncate">
+                        <span className="hidden text-[10px] uppercase tracking-[0.14em] opacity-70 sm:block">
                           Next
                         </span>
                         <span className="font-medium text-foreground/90">
@@ -323,12 +347,12 @@ export function StackGraph({ className }: { className?: string }) {
                         </span>
                       </span>
                       <ChevronRight
-                        className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                        className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5"
                         strokeWidth={1.75}
                       />
                     </button>
                   ) : (
-                    <span />
+                    <span className="shrink-0" />
                   )}
                 </div>
               </div>

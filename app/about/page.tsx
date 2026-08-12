@@ -19,13 +19,13 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="relative z-10 pt-24">
-      <section className="mx-auto w-full max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
+    <div className="relative z-10 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] sm:pt-24">
+      <section className="page-gutter pb-8">
         <SoftReveal>
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent-brand">
             About
           </p>
-          <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+          <h1 className="mt-3 text-[clamp(2rem,6vw,3rem)] font-semibold tracking-tight">
             {siteConfig.name}
           </h1>
           <p className="mt-4 max-w-xl text-lg text-muted-foreground">

@@ -47,7 +47,7 @@ export function AdminLayoutShell({ email, children }: AdminLayoutShellProps) {
         onNavigate={() => setMobileOpen(false)}
       />
 
-      <main className="min-w-0 px-4 py-6 sm:px-6 @[56rem]/admin:ml-64 @[56rem]/admin:px-8">
+      <main className="min-w-0 px-4 py-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-6 @[56rem]/admin:ml-64 @[56rem]/admin:px-8">
         {children}
       </main>
     </div>

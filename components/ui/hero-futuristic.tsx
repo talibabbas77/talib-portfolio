@@ -55,7 +55,7 @@ export function HeroFuturistic() {
   const years = aboutCopy.highlights[0]?.value ?? '2+ years';
 
   return (
-    <div className="relative flex h-full w-full flex-col text-foreground">
+    <div className="relative flex min-h-dvh w-full flex-col text-foreground">
       <style>{`
         @keyframes hero-fade-slide {
           from { opacity: 0; transform: translateY(18px); }
@@ -78,7 +78,7 @@ export function HeroFuturistic() {
         }
       `}</style>
 
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 content-center gap-8 px-4 pb-14 pt-24 sm:px-6 sm:pt-28 lg:grid-cols-12 lg:items-stretch lg:gap-10 lg:px-8">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 content-center gap-6 px-4 pb-16 pt-[calc(4.75rem+env(safe-area-inset-top,0px))] sm:gap-8 sm:px-6 sm:pb-14 sm:pt-28 lg:grid-cols-12 lg:items-stretch lg:gap-10 lg:px-8">
         <div
           className={cn(
             'hero-trust-in flex h-full flex-col justify-between gap-8 lg:col-span-7',
@@ -101,7 +101,7 @@ export function HeroFuturistic() {
               <p className="text-sm font-medium uppercase tracking-[0.24em] text-accent-brand">
                 {siteConfig.role}
               </p>
-              <h1 className="max-w-full font-sans text-4xl font-medium tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-[3.5rem] xl:text-[4.25rem] xl:leading-[1.1]">
+              <h1 className="max-w-full font-sans text-[clamp(2rem,8vw,4.25rem)] font-medium leading-[1.08] tracking-tight text-foreground">
                 <span className="inline-block bg-gradient-to-br from-foreground via-foreground to-[var(--accent-brand)] bg-clip-text pr-[0.12em] pb-[0.08em] font-sans text-transparent">
                   {siteConfig.name}
                 </span>
@@ -170,10 +170,10 @@ export function HeroFuturistic() {
         </div>
 
         <div
-          className="hero-trust-in flex h-full lg:col-span-5"
+          className="hero-trust-in lg:col-span-5"
           style={{ animationDelay: ready ? '0.2s' : undefined }}
         >
-          <div className="relative flex h-full w-full flex-col overflow-hidden rounded-md border border-border/70 bg-background/75 shadow-sm backdrop-blur-xl dark:border-foreground/10 dark:bg-background/40 dark:shadow-none">
+          <div className="relative flex w-full flex-col overflow-hidden rounded-md border border-border/70 bg-background/75 shadow-sm backdrop-blur-xl dark:border-foreground/10 dark:bg-background/40 dark:shadow-none lg:h-full">
             <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent-brand/15 blur-3xl" />
 
             <div className="relative z-10 flex flex-1 flex-col justify-between gap-6 p-6 sm:p-7">
@@ -221,14 +221,14 @@ export function HeroFuturistic() {
 
               <div className="space-y-4">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                  <div className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-background/70 px-3 py-1 text-[10px] font-medium tracking-wide text-muted-foreground dark:border-foreground/10 dark:bg-background/50">
+                  <div className="inline-flex w-fit max-w-full items-center gap-1.5 rounded-md border border-border/70 bg-background/70 px-3 py-1 text-[10px] font-medium tracking-wide text-muted-foreground dark:border-foreground/10 dark:bg-background/50">
                     <span className="relative flex h-2 w-2">
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-brand opacity-70" />
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-brand" />
                     </span>
                     Available
                   </div>
-                  <p className="whitespace-nowrap text-xs leading-none text-muted-foreground sm:text-right">
+                  <p className="max-w-full text-xs leading-snug text-muted-foreground sm:text-right">
                     Clear specs, honest timelines, no overselling the stack.
                   </p>
                 </div>
@@ -266,7 +266,7 @@ export function HeroFuturistic() {
 
       <button
         type="button"
-        className="hero-scroll-indicator"
+        className="hero-scroll-indicator hidden sm:inline-flex"
         onClick={() => scrollToId('about')}
         aria-label="Scroll to about"
       >

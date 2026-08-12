@@ -38,7 +38,7 @@ export function HomeContactSection() {
     <section
       ref={ref}
       id="contact"
-      className="relative scroll-mt-28 py-20 md:py-24"
+      className="relative scroll-mt-[calc(5.5rem+env(safe-area-inset-top,0px))] py-16 sm:scroll-mt-28 sm:py-20 md:py-24"
       aria-labelledby="home-contact-heading"
     >
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
