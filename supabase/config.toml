@@ -1,0 +1,10 @@
+# Supabase local config (remote migrations via CLI)
+# Link: npx supabase link --project-ref ackxcnyddqzbukjeikqs
+
+project_id = "ackxcnyddqzbukjeikqs"
+
+[api]
+enabled = true
+
+[db]
+major_version = 15

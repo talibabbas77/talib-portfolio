@@ -46,14 +46,10 @@ export function Navbar() {
       >
         <Link
           href="/"
-          className="group flex h-10 shrink-0 items-center gap-2.5 rounded-lg px-1.5 transition-opacity hover:opacity-90"
+          className="group flex h-10 shrink-0 items-center rounded-lg px-1.5 transition-opacity hover:opacity-90"
           aria-label={`${siteConfig.name} home`}
         >
-          <span className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-[var(--accent-brand)] to-[#0a4a3a] text-xs font-bold tracking-tight text-[#06110c] ring-1 ring-accent-brand/30">
-            <span className="relative z-10">TA</span>
-            <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_55%)]" />
-          </span>
-          <span className="hidden text-left leading-tight sm:block">
+          <span className="text-left leading-tight">
             <span className="block text-sm font-bold tracking-tight text-foreground">
               Talib Abbas
             </span>

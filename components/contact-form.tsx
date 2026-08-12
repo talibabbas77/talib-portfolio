@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { CheckCircle, Send } from "lucide-react";
+import { TurnstileWidget, type TurnstileWidgetRef } from "@/components/turnstile-widget";
 import { contactCopy } from "@/lib/site-content";
 import { GsapButton } from "@/components/ui/gsap-button";
 import { cn } from "@/lib/utils";
@@ -11,9 +12,10 @@ export type ContactFormData = {
   email: string;
   subject: string;
   message: string;
+  turnstileToken?: string;
 };
 
-const EMPTY_FORM: ContactFormData = {
+const EMPTY_FORM = {
   name: "",
   email: "",
   subject: "",
@@ -36,15 +38,32 @@ export function ContactForm({
   showHeading = true,
   compact = false,
 }: ContactFormProps) {
-  const [formData, setFormData] = useState<ContactFormData>(EMPTY_FORM);
+  const [formData, setFormData] = useState(EMPTY_FORM);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileWidgetRef>(null);
 
   const fieldId = (name: string) => `${idPrefix}-${name}`;
 
+  const handleTurnstileVerify = useCallback((token: string) => {
+    setTurnstileToken(token);
+    setError(null);
+  }, []);
+
+  const handleTurnstileExpire = useCallback(() => {
+    setTurnstileToken(null);
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!turnstileToken) {
+      setError("Complete the verification check before sending.");
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
 
@@ -52,19 +71,28 @@ export function ContactForm({
       const response = await fetch("/api/contact-simple", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          turnstileToken,
+        }),
       });
 
       if (response.ok) {
         setIsSubmitted(true);
         setFormData(EMPTY_FORM);
+        setTurnstileToken(null);
+        turnstileRef.current?.reset();
         window.setTimeout(() => setIsSubmitted(false), 6000);
       } else {
         const errorData = await response.json();
         setError(errorData.error || "Could not send the message.");
+        setTurnstileToken(null);
+        turnstileRef.current?.reset();
       }
     } catch {
       setError("Could not send the message. Check your connection and try again.");
+      setTurnstileToken(null);
+      turnstileRef.current?.reset();
     } finally {
       setIsSubmitting(false);
     }
@@ -187,25 +215,38 @@ export function ContactForm({
           </p>
         ) : null}
 
-        <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs font-medium text-muted-foreground">
-            All fields required. Reply within 24 hours on business days.
-          </p>
-          <GsapButton
-            type="submit"
-            variant="brand"
-            size="lg"
-            disabled={isSubmitting}
-            className="w-full shrink-0 font-bold sm:w-auto sm:min-w-[11rem]"
-            icon={
-              isSubmitting ? undefined : (
-                <Send className="h-4 w-4" strokeWidth={1.75} />
-              )
-            }
-            iconPosition="left"
-          >
-            {isSubmitting ? "Sending..." : "Send message"}
-          </GsapButton>
+        <div className="space-y-4 border-t border-border/60 pt-4">
+          <TurnstileWidget
+            ref={turnstileRef}
+            action="contact_submit"
+            onVerify={handleTurnstileVerify}
+            onExpire={handleTurnstileExpire}
+            onError={() => {
+              setTurnstileToken(null);
+              setError("Verification failed to load. Refresh and try again.");
+            }}
+          />
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs font-medium text-muted-foreground">
+              All fields required. Reply within 24 hours on business days.
+            </p>
+            <GsapButton
+              type="submit"
+              variant="brand"
+              size="lg"
+              disabled={isSubmitting || !turnstileToken}
+              className="w-full shrink-0 font-bold sm:w-auto sm:min-w-[11rem]"
+              icon={
+                isSubmitting ? undefined : (
+                  <Send className="h-4 w-4" strokeWidth={1.75} />
+                )
+              }
+              iconPosition="left"
+            >
+              {isSubmitting ? "Sending..." : "Send message"}
+            </GsapButton>
+          </div>
         </div>
       </form>
     </div>

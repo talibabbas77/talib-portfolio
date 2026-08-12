@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { EditorialIndex } from "@/components/editorial/editorial-index";
-import { blogPosts, siteConfig } from "@/lib/site-content";
+import { getPublishedBlogPosts } from "@/lib/cms/blog";
+import { siteConfig } from "@/lib/site-content";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -14,8 +17,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
-  const items = blogPosts.map((post) => ({
+export default async function BlogPage() {
+  const posts = await getPublishedBlogPosts();
+  const items = posts.map((post) => ({
     href: `/blog/${post.slug}`,
     kicker: post.kicker,
     title: post.title,

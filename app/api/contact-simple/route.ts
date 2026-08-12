@@ -2,8 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { getMissingEmailEnvVars } from "@/lib/email/transporter";
 import { sendContactEmails } from "@/lib/email/send-contact-emails";
 import type { ContactFormPayload } from "@/lib/email/types";
+import { getClientIp, verifyTurnstileToken } from "@/lib/turnstile/verify";
 
-function isValidPayload(data: unknown): data is ContactFormPayload {
+function isValidPayload(data: unknown): data is ContactFormPayload & {
+  turnstileToken?: string;
+} {
   if (!data || typeof data !== "object") return false;
   const payload = data as Record<string, unknown>;
   return (
@@ -27,6 +30,16 @@ export async function POST(request: NextRequest) {
         { error: "All fields are required" },
         { status: 400 }
       );
+    }
+
+    const verification = await verifyTurnstileToken(
+      formData.turnstileToken,
+      "contact_submit",
+      getClientIp(request)
+    );
+
+    if (!verification.ok) {
+      return NextResponse.json({ error: verification.reason }, { status: 403 });
     }
 
     const missingVars = getMissingEmailEnvVars();

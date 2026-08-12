@@ -13,6 +13,7 @@ import {
   socialLinks,
 } from "@/lib/site-content";
 import { GsapButton } from "@/components/ui/gsap-button";
+import { NewsletterSubscribeForm } from "@/components/newsletter-subscribe-form";
 import { cn } from "@/lib/utils";
 
 const SOCIAL_ICONS = {
@@ -47,18 +48,13 @@ export function Footer() {
         <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 sm:py-14 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
             <div className="space-y-5">
-              <div className="flex min-w-0 items-center gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[var(--accent-brand)] text-sm font-bold text-white dark:text-[#06110c]">
-                  TA
-                </span>
-                <div className="min-w-0">
-                  <p className="truncate text-xl font-bold tracking-tight text-foreground">
-                    {siteConfig.name}
-                  </p>
-                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-accent-brand">
-                    {siteConfig.role}
-                  </p>
-                </div>
+              <div className="min-w-0">
+                <p className="truncate text-xl font-bold tracking-tight text-foreground">
+                  {siteConfig.name}
+                </p>
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-accent-brand">
+                  {siteConfig.role}
+                </p>
               </div>
               <p className="max-w-md text-sm font-medium leading-relaxed text-foreground/80">
                 {siteConfig.tagline}
@@ -149,6 +145,10 @@ export function Footer() {
                 </ul>
               </div>
             </div>
+          </div>
+
+          <div className="mt-10 border-t border-foreground/10 pt-10">
+            <NewsletterSubscribeForm className="max-w-xl" />
           </div>
 
           <div className="mt-12 flex flex-col justify-between gap-3 border-t border-foreground/10 pt-6 sm:flex-row sm:items-center">

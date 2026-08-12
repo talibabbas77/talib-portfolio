@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { EditorialIndex } from "@/components/editorial/editorial-index";
-import { caseStudies, siteConfig } from "@/lib/site-content";
+import { getPublishedCaseStudies } from "@/lib/cms/case-studies";
+import { siteConfig } from "@/lib/site-content";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Case studies",
@@ -14,8 +17,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CaseStudiesPage() {
-  const items = caseStudies.map((study) => ({
+export default async function CaseStudiesPage() {
+  const studies = await getPublishedCaseStudies();
+  const items = studies.map((study) => ({
     href: `/case-studies/${study.slug}`,
     kicker: study.kicker,
     title: study.title,

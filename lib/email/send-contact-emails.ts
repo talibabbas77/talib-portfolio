@@ -7,6 +7,7 @@ import {
   verifyEmailTransporter,
 } from "@/lib/email/transporter";
 import type { ContactFormPayload } from "@/lib/email/types";
+import { saveContactSubmission } from "@/lib/admin/save-submission";
 
 export async function sendContactEmails(payload: ContactFormPayload) {
   const transporter = createEmailTransporter();
@@ -36,4 +37,6 @@ export async function sendContactEmails(payload: ContactFormPayload) {
       html: confirmationHtml,
     }),
   ]);
+
+  await saveContactSubmission(payload);
 }

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { EB_Garamond, Ubuntu } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SiteBackground } from "@/components/site-background";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+import { ConditionalBackground } from "@/components/conditional-background";
+import { SiteChrome } from "@/components/site-chrome";
+import { SiteToaster } from "@/components/site-toaster";
 import { KinoRoot } from "@/components/motion/kino-root";
 import { siteConfig, socialLinks } from "@/lib/site-content";
 
@@ -136,14 +136,11 @@ export default function RootLayout({
           disableTransitionOnChange
           storageKey="talib-portfolio-theme"
         >
-          <SiteBackground />
+          <ConditionalBackground />
           <KinoRoot>
-            <div className="relative z-10">
-              <Navbar />
-              <main>{children}</main>
-              <Footer />
-            </div>
+            <SiteChrome>{children}</SiteChrome>
           </KinoRoot>
+          <SiteToaster />
         </ThemeProvider>
       </body>
     </html>
