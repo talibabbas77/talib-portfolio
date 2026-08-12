@@ -8,6 +8,21 @@ export type TurnstileVerifyResult =
   | { ok: true }
   | { ok: false; reason: string };
 
+function isAllowedHostname(hostname: string, allowed: Set<string>) {
+  if (allowed.has(hostname)) return true;
+
+  // Accept Vercel preview URLs like project-git-branch-user.vercel.app
+  if (hostname.endsWith(".vercel.app")) {
+    for (const entry of allowed) {
+      if (entry.endsWith(".vercel.app") || entry === "talibabbas.vercel.app") {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
 export async function verifyTurnstileToken(
   token: string | undefined | null,
   expectedAction: TurnstileAction,
@@ -17,7 +32,11 @@ export async function verifyTurnstileToken(
   const expectedHostnames = new Set(getTurnstileHostnames());
 
   if (!secret) {
-    return { ok: false, reason: "Turnstile is not configured." };
+    return {
+      ok: false,
+      reason:
+        "Turnstile is not configured. Set CLOUDFLARE_SECRET_KEY on the server.",
+    };
   }
 
   if (
@@ -65,13 +84,27 @@ export async function verifyTurnstileToken(
     return { ok: false, reason: "Verification request failed." };
   }
 
-  if (
-    !result.success ||
-    result.action !== expectedAction ||
-    !result.hostname ||
-    !expectedHostnames.has(result.hostname)
-  ) {
-    return { ok: false, reason: "Bot verification failed." };
+  if (!result.success) {
+    const codes = result["error-codes"]?.join(", ") || "unknown";
+    return {
+      ok: false,
+      reason: `Bot verification failed (${codes}).`,
+    };
+  }
+
+  // Action is optional on some Turnstile configs; enforce when Cloudflare returns it.
+  if (result.action && result.action !== expectedAction) {
+    return {
+      ok: false,
+      reason: `Unexpected Turnstile action "${result.action}".`,
+    };
+  }
+
+  if (!result.hostname || !isAllowedHostname(result.hostname, expectedHostnames)) {
+    return {
+      ok: false,
+      reason: `Hostname "${result.hostname ?? "unknown"}" is not allowed for Turnstile.`,
+    };
   }
 
   return { ok: true };

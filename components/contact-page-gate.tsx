@@ -24,10 +24,25 @@ export function ContactPageGate() {
           body: JSON.stringify({ token }),
         });
 
-        const data = await response.json();
+        const raw = await response.text();
+        let data: { ok?: boolean; error?: string } = {};
+        if (raw) {
+          try {
+            data = JSON.parse(raw) as { ok?: boolean; error?: string };
+          } catch {
+            throw new Error(
+              response.ok
+                ? "Verification response was invalid."
+                : `Verification failed (${response.status}). Check Turnstile secret env on Vercel.`
+            );
+          }
+        }
 
         if (!response.ok) {
-          throw new Error(data.error || "Verification failed.");
+          throw new Error(
+            data.error ||
+              `Verification failed (${response.status}). Check CLOUDFLARE_SECRET_KEY on Vercel.`
+          );
         }
 
         router.replace("/contact");
