@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { ConfirmModal } from "@/components/admin/confirm-modal";
 import { ImageField } from "@/components/admin/image-field";
 import { RichTextEditor } from "@/components/admin/rich-text-editor";
 import { slugify } from "@/lib/admin/slugify";
@@ -17,6 +18,8 @@ type CaseStudyFormProps = {
 export function CaseStudyForm({ initial, mode }: CaseStudyFormProps) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const [form, setForm] = useState({
     title: initial?.title ?? "",
     slug: initial?.slug ?? "",
@@ -76,6 +79,27 @@ export function CaseStudyForm({ initial, mode }: CaseStudyFormProps) {
     }
   };
 
+  const remove = async () => {
+    if (!initial?.id) return;
+    setDeleting(true);
+    try {
+      const response = await fetch("/api/admin/case-studies", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids: [initial.id] }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Delete failed.");
+      toast.success("Case study deleted.");
+      setConfirmOpen(false);
+      router.push("/admin/case-studies");
+      router.refresh();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Delete failed.");
+      setDeleting(false);
+    }
+  };
+
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -125,11 +149,47 @@ export function CaseStudyForm({ initial, mode }: CaseStudyFormProps) {
           <input type="checkbox" checked={form.featured} onChange={(e) => setForm((p) => ({ ...p, featured: e.target.checked }))} />
           Featured case study
         </label>
-        <div className="flex flex-wrap gap-3">
-          <button type="button" disabled={saving} onClick={() => save(false)} className="h-11 rounded-md border px-5 text-sm font-bold">Save draft</button>
-          <button type="button" disabled={saving} onClick={() => save(true)} className="h-11 rounded-md bg-[var(--accent-brand)] px-5 text-sm font-bold text-white dark:text-[#06110c]">Publish</button>
+        <div className="flex flex-wrap gap-3 border-t border-border/60 pt-4">
+          <button
+            type="button"
+            disabled={saving || deleting}
+            onClick={() => save(false)}
+            className="inline-flex h-11 items-center rounded-md border border-border px-5 text-sm font-bold disabled:opacity-50"
+          >
+            Save draft
+          </button>
+          <button
+            type="button"
+            disabled={saving || deleting}
+            onClick={() => save(true)}
+            className="inline-flex h-11 items-center rounded-md bg-[var(--accent-brand)] px-5 text-sm font-bold text-white disabled:opacity-50 dark:text-[#06110c]"
+          >
+            Publish
+          </button>
+          {mode === "edit" ? (
+            <button
+              type="button"
+              disabled={saving || deleting}
+              onClick={() => setConfirmOpen(true)}
+              className="inline-flex h-11 items-center rounded-md border border-destructive/30 px-5 text-sm font-bold text-destructive hover:bg-destructive/10 disabled:opacity-50 sm:ml-auto"
+            >
+              Delete case study
+            </button>
+          ) : null}
         </div>
       </div>
+
+      <ConfirmModal
+        open={confirmOpen}
+        title="Delete this case study?"
+        description={`“${form.title || "Untitled case study"}” will be permanently deleted. This cannot be undone.`}
+        confirmLabel="Delete"
+        loading={deleting}
+        onCancel={() => {
+          if (!deleting) setConfirmOpen(false);
+        }}
+        onConfirm={remove}
+      />
     </div>
   );
 }

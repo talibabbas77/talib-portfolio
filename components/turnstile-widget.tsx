@@ -11,6 +11,10 @@ import {
 } from "react";
 import { cn } from "@/lib/utils";
 
+const TURNSTILE_SCRIPT_ID = "cf-turnstile-script";
+const TURNSTILE_SCRIPT_SRC =
+  "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+
 declare global {
   interface Window {
     turnstile?: {
@@ -44,15 +48,42 @@ type TurnstileWidgetProps = {
   theme?: "light" | "dark" | "auto";
 };
 
+function getClientSiteKey() {
+  return process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
+}
+
 export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetProps>(
   function TurnstileWidget(
     { action, onVerify, onExpire, onError, className, theme = "auto" },
     ref
   ) {
-    const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
+    const siteKey = getClientSiteKey();
     const containerRef = useRef<HTMLDivElement>(null);
     const widgetIdRef = useRef<string | undefined>(undefined);
+    const [mounted, setMounted] = useState(false);
     const [scriptReady, setScriptReady] = useState(false);
+
+    const onVerifyRef = useRef(onVerify);
+    const onExpireRef = useRef(onExpire);
+    const onErrorRef = useRef(onError);
+
+    useEffect(() => {
+      onVerifyRef.current = onVerify;
+    }, [onVerify]);
+
+    useEffect(() => {
+      onExpireRef.current = onExpire;
+    }, [onExpire]);
+
+    useEffect(() => {
+      onErrorRef.current = onError;
+    }, [onError]);
+
+    useEffect(() => {
+      setMounted(true);
+      // Script may already be present from a previous mount / Soft navigation.
+      if (window.turnstile) setScriptReady(true);
+    }, []);
 
     const reset = useCallback(() => {
       if (widgetIdRef.current && window.turnstile) {
@@ -62,52 +93,86 @@ export const TurnstileWidget = forwardRef<TurnstileWidgetRef, TurnstileWidgetPro
 
     useImperativeHandle(ref, () => ({ reset }), [reset]);
 
-    useEffect(() => {
-      if (!scriptReady || !siteKey || !containerRef.current || !window.turnstile) {
-        return;
-      }
+    const renderWidget = useCallback(() => {
+      const container = containerRef.current;
+      if (!container || !siteKey || !window.turnstile) return;
 
       if (widgetIdRef.current) {
-        window.turnstile.remove(widgetIdRef.current);
+        try {
+          window.turnstile.remove(widgetIdRef.current);
+        } catch {
+          // Widget may already be gone after a fast remount.
+        }
         widgetIdRef.current = undefined;
       }
 
-      widgetIdRef.current = window.turnstile.render(containerRef.current, {
+      container.replaceChildren();
+
+      widgetIdRef.current = window.turnstile.render(container, {
         sitekey: siteKey,
         action,
-        callback: onVerify,
-        "expired-callback": onExpire,
-        "error-callback": onError,
+        callback: (token) => onVerifyRef.current(token),
+        "expired-callback": () => onExpireRef.current?.(),
+        "error-callback": () => onErrorRef.current?.(),
         theme,
+      });
+    }, [action, siteKey, theme]);
+
+    useEffect(() => {
+      if (!mounted || !scriptReady || !siteKey) return;
+
+      // Do not call turnstile.ready() - Next.js Script loads api.js with async/defer,
+      // and Cloudflare throws if ready() is used in that mode.
+      const frame = window.requestAnimationFrame(() => {
+        renderWidget();
       });
 
       return () => {
+        window.cancelAnimationFrame(frame);
         if (widgetIdRef.current && window.turnstile) {
-          window.turnstile.remove(widgetIdRef.current);
+          try {
+            window.turnstile.remove(widgetIdRef.current);
+          } catch {
+            // ignore
+          }
           widgetIdRef.current = undefined;
         }
       };
-    }, [scriptReady, siteKey, action, onVerify, onExpire, onError, theme]);
+    }, [mounted, renderWidget, scriptReady, siteKey]);
 
     if (!siteKey) {
       return (
         <p className="text-sm font-medium text-destructive" role="alert">
-          Turnstile site key is missing. Add it to your environment variables.
+          Turnstile site key is missing. Set NEXT_PUBLIC_TURNSTILE_SITE_KEY or
+          CLOUDFLARE_SITE_KEY, then restart the dev server.
         </p>
+      );
+    }
+
+    if (!mounted) {
+      return (
+        <div
+          className={cn("min-h-[65px]", className)}
+          aria-hidden
+          suppressHydrationWarning
+        />
       );
     }
 
     return (
       <>
         <Script
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          id={TURNSTILE_SCRIPT_ID}
+          src={TURNSTILE_SCRIPT_SRC}
           strategy="afterInteractive"
           onReady={() => setScriptReady(true)}
+          onLoad={() => setScriptReady(true)}
         />
         <div
           ref={containerRef}
           className={cn("min-h-[65px]", className)}
           aria-label="Cloudflare Turnstile verification"
+          suppressHydrationWarning
         />
       </>
     );

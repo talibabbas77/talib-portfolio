@@ -1,13 +1,10 @@
-import Link from "next/link";
-import { formatDistanceToNow } from "@/lib/admin/format";
-import { getSubmissionStats, getSubmissions } from "@/lib/admin/queries";
 import {
   AdminEmptyState,
   AdminStatCard,
-  AdminTable,
   SetupNotice,
-  StatusBadge,
 } from "@/components/admin/admin-shell";
+import { ContactTable } from "@/components/admin/contact-table";
+import { getSubmissionStats, getSubmissions } from "@/lib/admin/queries";
 import { canPersistSubmissions } from "@/lib/supabase/admin";
 
 export default async function AdminContactPage() {
@@ -37,9 +34,12 @@ export default async function AdminContactPage() {
       {!canPersistSubmissions() ? <SetupNotice /> : null}
 
       <div>
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Contact inbox</h1>
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          Contact inbox
+        </h1>
         <p className="mt-2 text-sm font-medium text-muted-foreground">
-          Form submissions stored in Supabase. SMTP emails still send in parallel.
+          Form submissions stored in Supabase. Open, delete, or bulk-delete
+          messages here.
         </p>
       </div>
 
@@ -52,50 +52,15 @@ export default async function AdminContactPage() {
             <AdminStatCard label="New" value={stats.new} tone="accent" />
             <AdminStatCard label="Read" value={stats.read} />
             <AdminStatCard label="Replied" value={stats.replied} />
-            <AdminStatCard label="Archived" value={stats.archived} tone="muted" />
+            <AdminStatCard
+              label="Archived"
+              value={stats.archived}
+              tone="muted"
+            />
             <AdminStatCard label="This week" value={stats.thisWeek} />
           </div>
 
-          <AdminTable>
-            <table className="min-w-[48rem] w-full text-left text-sm">
-              <thead className="border-b border-border/60 bg-background/40">
-                <tr>
-                  <th className="px-4 py-3 font-bold sm:px-6">From</th>
-                  <th className="px-4 py-3 font-bold sm:px-6">Subject</th>
-                  <th className="px-4 py-3 font-bold sm:px-6">Status</th>
-                  <th className="px-4 py-3 font-bold sm:px-6">Received</th>
-                </tr>
-              </thead>
-              <tbody>
-                {submissions.map((item) => (
-                  <tr key={item.id} className="border-b border-border/40 hover:bg-background/40">
-                    <td className="px-4 py-4 sm:px-6">
-                      <Link href={`/admin/submissions/${item.id}`} className="font-bold hover:text-accent-brand">
-                        {item.name}
-                      </Link>
-                      <p className="text-xs text-muted-foreground">{item.email}</p>
-                    </td>
-                    <td className="px-4 py-4 sm:px-6">
-                      <Link href={`/admin/submissions/${item.id}`} className="font-semibold hover:text-accent-brand">
-                        {item.subject}
-                      </Link>
-                    </td>
-                    <td className="px-4 py-4 sm:px-6">
-                      <StatusBadge status={item.status} />
-                    </td>
-                    <td className="px-4 py-4 text-xs text-muted-foreground sm:px-6">
-                      {formatDistanceToNow(item.created_at)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {submissions.length === 0 ? (
-              <div className="p-8">
-                <AdminEmptyState title="No submissions yet" body="Contact form messages will appear here." />
-              </div>
-            ) : null}
-          </AdminTable>
+          <ContactTable items={submissions} />
         </>
       )}
     </div>

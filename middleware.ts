@@ -1,11 +1,13 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { updateSession } from "@/lib/supabase/middleware";
-import { CONTACT_GATE_COOKIE } from "@/lib/turnstile/config";
 
-export async function proxy(request: NextRequest) {
+/** Kept inline so contact routes never pull Supabase into the middleware bundle. */
+const CONTACT_GATE_COOKIE = "contact_verified";
+
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith("/admin")) {
+    const { updateSession } = await import("@/lib/supabase/middleware");
     return updateSession(request);
   }
 

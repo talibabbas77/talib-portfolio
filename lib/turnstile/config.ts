@@ -1,6 +1,11 @@
 import { siteConfig } from "@/lib/site-content";
 
-const DEFAULT_HOSTNAMES = ["localhost", "127.0.0.1", "talibabbas.vercel.app"];
+const DEFAULT_HOSTNAMES = [
+  "localhost",
+  "127.0.0.1",
+  "talibabbas.vercel.app",
+  "www.talibabbas.vercel.app",
+];
 
 export function getTurnstileSiteKey() {
   return (

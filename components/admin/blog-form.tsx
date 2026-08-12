@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { ConfirmModal } from "@/components/admin/confirm-modal";
 import { ImageField } from "@/components/admin/image-field";
 import { RichTextEditor } from "@/components/admin/rich-text-editor";
 import { slugify } from "@/lib/admin/slugify";
@@ -17,6 +18,8 @@ type BlogFormProps = {
 export function BlogForm({ initial, mode }: BlogFormProps) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const [form, setForm] = useState({
     title: initial?.title ?? "",
     slug: initial?.slug ?? "",
@@ -66,6 +69,27 @@ export function BlogForm({ initial, mode }: BlogFormProps) {
       toast.error(error instanceof Error ? error.message : "Save failed.");
     } finally {
       setSaving(false);
+    }
+  };
+
+  const remove = async () => {
+    if (!initial?.id) return;
+    setDeleting(true);
+    try {
+      const response = await fetch("/api/admin/blog", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids: [initial.id] }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Delete failed.");
+      toast.success("Post deleted.");
+      setConfirmOpen(false);
+      router.push("/admin/blog");
+      router.refresh();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Delete failed.");
+      setDeleting(false);
     }
   };
 
@@ -194,10 +218,10 @@ export function BlogForm({ initial, mode }: BlogFormProps) {
             }
           />
         </Field>
-        <div className="flex flex-wrap gap-3 pt-2">
+        <div className="flex flex-wrap gap-3 border-t border-border/60 pt-4">
           <button
             type="button"
-            disabled={saving}
+            disabled={saving || deleting}
             onClick={() => save(false)}
             className="inline-flex h-11 items-center rounded-md border border-border px-5 text-sm font-bold disabled:opacity-50"
           >
@@ -205,14 +229,36 @@ export function BlogForm({ initial, mode }: BlogFormProps) {
           </button>
           <button
             type="button"
-            disabled={saving}
+            disabled={saving || deleting}
             onClick={() => save(true)}
             className="inline-flex h-11 items-center rounded-md bg-[var(--accent-brand)] px-5 text-sm font-bold text-white disabled:opacity-50 dark:text-[#06110c]"
           >
             {saving ? "Publishing..." : "Publish"}
           </button>
+          {mode === "edit" ? (
+            <button
+              type="button"
+              disabled={saving || deleting}
+              onClick={() => setConfirmOpen(true)}
+              className="inline-flex h-11 items-center rounded-md border border-destructive/30 px-5 text-sm font-bold text-destructive hover:bg-destructive/10 disabled:opacity-50 sm:ml-auto"
+            >
+              Delete post
+            </button>
+          ) : null}
         </div>
       </div>
+
+      <ConfirmModal
+        open={confirmOpen}
+        title="Delete this post?"
+        description={`“${form.title || "Untitled post"}” will be permanently deleted. This cannot be undone.`}
+        confirmLabel="Delete"
+        loading={deleting}
+        onCancel={() => {
+          if (!deleting) setConfirmOpen(false);
+        }}
+        onConfirm={remove}
+      />
     </div>
   );
 }

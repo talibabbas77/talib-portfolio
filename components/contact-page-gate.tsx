@@ -56,15 +56,15 @@ export function ContactPageGate() {
       <div className="flex flex-1 flex-col items-center justify-center px-4 py-10 sm:px-6 sm:py-12">
         <div className="w-full max-w-[360px]">
           <TurnstileWidget
-          action="contact_page"
-          theme="light"
-          onVerify={handleVerify}
-          onExpire={() => setVerifying(false)}
-          onError={() => {
-            setVerifying(false);
-            setError("Verification failed to load. Refresh and try again.");
-          }}
-        />
+            action="contact_page"
+            theme="light"
+            onVerify={handleVerify}
+            onExpire={() => setVerifying(false)}
+            onError={() => {
+              setVerifying(false);
+              setError("Verification failed to load. Refresh and try again.");
+            }}
+          />
         </div>
 
         {verifying ? (

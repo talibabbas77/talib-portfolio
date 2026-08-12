@@ -47,7 +47,11 @@ export default async function AdminSubmissionPage({
               Received {formatDateTime(submission.created_at)}
             </p>
           </div>
-          <SubmissionActions id={submission.id} currentStatus={submission.status} />
+          <SubmissionActions
+            id={submission.id}
+            currentStatus={submission.status}
+            subject={submission.subject}
+          />
         </div>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
