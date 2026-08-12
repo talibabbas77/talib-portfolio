@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getMissingEmailEnvVars } from "@/lib/email/transporter";
-import { sendContactEmails } from "@/lib/email/send-contact-emails";
 import type { ContactFormPayload } from "@/lib/email/types";
-import { getClientIp, verifyTurnstileToken } from "@/lib/turnstile/verify";
 
 function isValidPayload(data: unknown): data is ContactFormPayload & {
   turnstileToken?: string;
@@ -32,6 +29,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const { getClientIp, verifyTurnstileToken } = await import(
+      "@/lib/turnstile/verify"
+    );
+
     const verification = await verifyTurnstileToken(
       formData.turnstileToken,
       "contact_submit",
@@ -42,6 +43,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: verification.reason }, { status: 403 });
     }
 
+    const { getMissingEmailEnvVars } = await import("@/lib/email/transporter");
     const missingVars = getMissingEmailEnvVars();
     if (missingVars.length > 0) {
       console.error("Missing environment variables:", missingVars);
@@ -58,6 +60,7 @@ export async function POST(request: NextRequest) {
       message: formData.message.trim(),
     };
 
+    const { sendContactEmails } = await import("@/lib/email/send-contact-emails");
     await sendContactEmails(payload);
 
     return NextResponse.json({ message: "Email sent successfully" }, { status: 200 });

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build",
     "start": "next start",
     "email:dev": "email dev --dir emails --port 3001",
     "seed:cms": "npx tsx scripts/seed-cms.ts",

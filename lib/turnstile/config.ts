@@ -1,5 +1,3 @@
-import { siteConfig } from "@/lib/site-content";
-
 const DEFAULT_HOSTNAMES = [
   "localhost",
   "127.0.0.1",
@@ -18,8 +16,8 @@ export function getTurnstileSiteKey() {
 
 export function getTurnstileSecret() {
   return (
-    process.env.TURNSTILE_SECRET ??
-    process.env.CLOUDFLARE_SECRET_KEY ??
+    process.env.TURNSTILE_SECRET?.trim() ||
+    process.env.CLOUDFLARE_SECRET_KEY?.trim() ||
     ""
   );
 }
@@ -31,13 +29,7 @@ export function getTurnstileHostnames() {
     .filter(Boolean);
 
   if (fromEnv.length > 0) return fromEnv;
-
-  try {
-    const host = new URL(siteConfig.siteUrl).hostname;
-    return [...new Set([...DEFAULT_HOSTNAMES, host])];
-  } catch {
-    return DEFAULT_HOSTNAMES;
-  }
+  return DEFAULT_HOSTNAMES;
 }
 
 export const CONTACT_GATE_COOKIE = "contact_verified";

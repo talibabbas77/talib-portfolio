@@ -1,26 +1,37 @@
-import {
-  getTurnstileHostnames,
-  getTurnstileSecret,
-  type TurnstileAction,
-} from "@/lib/turnstile/config";
+export type TurnstileAction = "contact_submit" | "contact_page";
 
 export type TurnstileVerifyResult =
   | { ok: true }
   | { ok: false; reason: string };
 
+const DEFAULT_HOSTNAMES = [
+  "localhost",
+  "127.0.0.1",
+  "talibabbas.vercel.app",
+  "www.talibabbas.vercel.app",
+];
+
+function getTurnstileSecret() {
+  return (
+    process.env.TURNSTILE_SECRET?.trim() ||
+    process.env.CLOUDFLARE_SECRET_KEY?.trim() ||
+    ""
+  );
+}
+
+function getTurnstileHostnames() {
+  const fromEnv = (process.env.TURNSTILE_HOSTNAMES ?? "")
+    .split(",")
+    .map((hostname) => hostname.trim())
+    .filter(Boolean);
+
+  if (fromEnv.length > 0) return fromEnv;
+  return DEFAULT_HOSTNAMES;
+}
+
 function isAllowedHostname(hostname: string, allowed: Set<string>) {
   if (allowed.has(hostname)) return true;
-
-  // Accept Vercel preview URLs like project-git-branch-user.vercel.app
-  if (hostname.endsWith(".vercel.app")) {
-    for (const entry of allowed) {
-      if (entry.endsWith(".vercel.app") || entry === "talibabbas.vercel.app") {
-        return true;
-      }
-    }
-  }
-
-  return false;
+  return hostname.endsWith(".vercel.app");
 }
 
 export async function verifyTurnstileToken(
@@ -55,22 +66,25 @@ export async function verifyTurnstileToken(
     "error-codes"?: string[];
   };
 
+  const body = new URLSearchParams({
+    secret,
+    response: token,
+  });
+
+  if (remoteIp) {
+    body.set("remoteip", remoteIp);
+  }
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 10_000);
+
   try {
-    const body = new URLSearchParams({
-      secret,
-      response: token,
-    });
-
-    if (remoteIp) {
-      body.set("remoteip", remoteIp);
-    }
-
     const response = await fetch(
       "https://challenges.cloudflare.com/turnstile/v0/siteverify",
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        signal: AbortSignal.timeout(10_000),
+        signal: controller.signal,
         body,
       }
     );
@@ -82,6 +96,8 @@ export async function verifyTurnstileToken(
     result = await response.json();
   } catch {
     return { ok: false, reason: "Verification request failed." };
+  } finally {
+    clearTimeout(timer);
   }
 
   if (!result.success) {
@@ -92,7 +108,6 @@ export async function verifyTurnstileToken(
     };
   }
 
-  // Action is optional on some Turnstile configs; enforce when Cloudflare returns it.
   if (result.action && result.action !== expectedAction) {
     return {
       ok: false,
@@ -100,7 +115,10 @@ export async function verifyTurnstileToken(
     };
   }
 
-  if (!result.hostname || !isAllowedHostname(result.hostname, expectedHostnames)) {
+  if (
+    !result.hostname ||
+    !isAllowedHostname(result.hostname, expectedHostnames)
+  ) {
     return {
       ok: false,
       reason: `Hostname "${result.hostname ?? "unknown"}" is not allowed for Turnstile.`,
