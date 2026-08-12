@@ -414,19 +414,70 @@ body {
   -ms-overflow-style: none;
 }
 
-/* Footer giant wordmark: dull metallic serif, no glow */
-.footer-wordmark-text {
-  font-family: var(--font-garamond), "EB Garamond", ui-serif, Georgia, serif;
-  color: color-mix(in oklab, var(--foreground) 18%, transparent);
-  text-shadow: none;
-  filter: none;
-  opacity: 1;
-  -webkit-text-fill-color: currentColor;
-  background: none;
-  -webkit-background-clip: unset;
-  background-clip: unset;
+/* Shared glass surface for navbar, footer, and overlays */
+.glass-panel {
+  border: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+  background: color-mix(in oklab, var(--background) 58%, transparent);
+  backdrop-filter: blur(22px) saturate(1.35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35);
+  box-shadow:
+    0 10px 36px -18px color-mix(in oklab, var(--foreground) 12%, transparent),
+    inset 0 1px 0 color-mix(in oklab, white 14%, transparent);
 }
 
-.dark .footer-wordmark-text {
-  color: color-mix(in oklab, #9ca3a0 22%, transparent);
+.dark .glass-panel {
+  border-color: color-mix(in oklab, white 12%, transparent);
+  background: color-mix(in oklab, #0a0f0d 42%, transparent);
+  box-shadow:
+    0 16px 44px -20px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 color-mix(in oklab, white 7%, transparent);
+}
+
+.glass-panel-strong {
+  border-color: color-mix(in oklab, var(--foreground) 14%, transparent);
+  background: color-mix(in oklab, var(--background) 72%, transparent);
+  backdrop-filter: blur(28px) saturate(1.45);
+  -webkit-backdrop-filter: blur(28px) saturate(1.45);
+}
+
+.dark .glass-panel-strong {
+  border-color: color-mix(in oklab, white 16%, transparent);
+  background: color-mix(in oklab, #0a0f0d 58%, transparent);
+}
+
+/* Navbar: light at top, heavy blur once content scrolls underneath */
+.glass-nav {
+  border: 1px solid color-mix(in oklab, var(--foreground) 6%, transparent);
+  background: color-mix(in oklab, var(--background) 28%, transparent);
+  backdrop-filter: blur(10px) saturate(1.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  box-shadow: none;
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    backdrop-filter 0.35s ease;
+}
+
+.dark .glass-nav {
+  border-color: color-mix(in oklab, white 6%, transparent);
+  background: color-mix(in oklab, #0a0f0d 22%, transparent);
+}
+
+.glass-nav-scrolled {
+  border-color: color-mix(in oklab, var(--foreground) 12%, transparent);
+  background: color-mix(in oklab, var(--background) 68%, transparent);
+  backdrop-filter: blur(32px) saturate(1.55);
+  -webkit-backdrop-filter: blur(32px) saturate(1.55);
+  box-shadow:
+    0 12px 40px -20px color-mix(in oklab, var(--foreground) 14%, transparent),
+    inset 0 1px 0 color-mix(in oklab, white 12%, transparent);
+}
+
+.dark .glass-nav-scrolled {
+  border-color: color-mix(in oklab, white 14%, transparent);
+  background: color-mix(in oklab, #0a0f0d 62%, transparent);
+  box-shadow:
+    0 16px 48px -22px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 color-mix(in oklab, white 8%, transparent);
 }

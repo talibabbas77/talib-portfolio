@@ -15,37 +15,73 @@ const STEPS = [
     id: "brief",
     label: "Brief",
     title: "Clarify the product and outcome",
-    body: "We align on the feature, users, and what done looks like before any code lands.",
+    body: "Before any code lands, we lock the feature, the users, and what done looks like. That keeps later UI and API work pointed at a real release, not a moving target.",
+    points: [
+      "Define the user flow and the one outcome this slice has to hit.",
+      "List must-haves vs. nice-to-haves so scope stays honest.",
+      "Agree on timeline, stack constraints, and who signs off.",
+    ],
+    tools: ["Scope doc", "User flow", "Acceptance criteria"],
   },
   {
     id: "ui",
     label: "UI",
     title: "Ship the interface people touch",
-    body: "Next.js or React surfaces with Tailwind. Clear layouts, no fluff chrome.",
+    body: "Next.js or React surfaces with Tailwind and component libraries where they help. Layouts stay readable on mobile, forms handle loading and errors, and chrome stays out of the way.",
+    points: [
+      "Page structure, navigation, and responsive breakpoints.",
+      "Forms, tables, and empty states that match real data.",
+      "Accessible focus states and predictable interaction patterns.",
+    ],
+    tools: ["Next.js", "React", "Tailwind", "Shadcn/UI"],
   },
   {
     id: "api",
     label: "API",
     title: "Wire the backend path",
-    body: "Node and Express routes with auth, validation, and predictable errors.",
+    body: "Node and Express routes carry auth, validation, and predictable errors back to the UI. Endpoints stay small, typed where it matters, and easy to extend when the product grows.",
+    points: [
+      "REST routes with input validation and consistent error shapes.",
+      "Session or token auth wired to the roles the product needs.",
+      "Webhooks and third-party callbacks handled without silent failures.",
+    ],
+    tools: ["Node.js", "Express", "TypeScript", "JWT / OAuth"],
   },
   {
     id: "data",
     label: "Data",
     title: "Store what has to survive",
-    body: "MongoDB, Postgres, Redis, or Supabase depending on the product shape.",
+    body: "MongoDB, Postgres, Redis, or Supabase depending on the product shape. Schemas match how the app reads and writes, with indexes and caching only where they earn their keep.",
+    points: [
+      "Model entities, relations, and migrations before UI depends on them.",
+      "Query paths tuned for the screens users actually open.",
+      "Redis or edge cache when repeat reads would slow the app down.",
+    ],
+    tools: ["MongoDB", "Postgres", "Redis", "Supabase"],
   },
   {
     id: "edges",
     label: "Edges",
     title: "Connect Shopify, CRM, or AI when needed",
-    body: "Liquid themes, GoHighLevel OAuth, OpenAI or Gemini. Only where they earn their keep.",
+    body: "Liquid themes, GoHighLevel OAuth, and OpenAI or Gemini hooks go in only where the product needs them. Integrations get logging, retries, and token budgets so they do not become production surprises.",
+    points: [
+      "Shopify sections, cart logic, and theme templates for storefront work.",
+      "GoHighLevel pipelines, tagging, and contact sync via OAuth 2.0.",
+      "AI features with prompt boundaries and usage kept in check.",
+    ],
+    tools: ["Shopify Liquid", "GoHighLevel", "OpenAI", "Gemini"],
   },
   {
     id: "ship",
     label: "Ship",
     title: "Deploy and stay for production",
-    body: "Vercel or the host you already use. Then fix what only shows up after release.",
+    body: "Vercel or the host you already use, with staging and production kept separate. After release I stay for the bugs that only show up under real traffic, analytics, and client edge cases.",
+    points: [
+      "Preview builds, env vars, and clean promotion to production.",
+      "Smoke checks on auth, payments, and integration callbacks.",
+      "Fixes for race conditions, mobile quirks, and CRM sync gaps.",
+    ],
+    tools: ["Vercel", "CI/CD", "Staging", "Monitoring"],
   },
 ] as const;
 
@@ -87,8 +123,8 @@ export function StackGraph({ className }: { className?: string }) {
 
     const st = ScrollTrigger.create({
       trigger: pin,
-      start: "top top",
-      end: () => `+=${LAST * Math.max(window.innerHeight * 0.55, 320)}`,
+      start: "top 7.5rem",
+      end: () => `+=${LAST * Math.max(window.innerHeight * 0.42, 280)}`,
       pin: true,
       scrub: 0.4,
       anticipatePin: 1,
@@ -127,19 +163,16 @@ export function StackGraph({ className }: { className?: string }) {
 
   return (
     <section id="stack" className={cn("relative", className)}>
-      <div
-        ref={pinRef}
-        className="flex min-h-dvh flex-col justify-center py-16 md:py-20"
-      >
+      <div ref={pinRef} className="pb-10 pt-28 md:pb-12 md:pt-32">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <SoftReveal>
             <p className="text-sm font-medium uppercase tracking-[0.2em] text-accent-brand">
               How work connects
             </p>
-            <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl">
+            <h2 className="mt-2 max-w-2xl text-2xl font-semibold tracking-tight md:text-3xl">
               UI, APIs, data, and integrations in one path
             </h2>
-            <p className="mt-3 max-w-xl text-muted-foreground">
+            <p className="mt-2 max-w-xl text-sm text-muted-foreground">
               {scrollDriven
                 ? "Scroll through the delivery path. Click a step anytime to jump."
                 : "Pick a step to see what happens at that stage."}
@@ -147,8 +180,8 @@ export function StackGraph({ className }: { className?: string }) {
           </SoftReveal>
 
           <SoftReveal delay={40}>
-            <div className="mt-10 grid gap-8 lg:grid-cols-[240px_1fr] lg:gap-14">
-              <ol className="relative border-l border-border/60">
+            <div className="mt-6 grid items-start gap-6 lg:grid-cols-[11rem_1fr] lg:gap-10 xl:grid-cols-[13rem_1fr]">
+              <ol className="relative h-80 border-l border-border/60 lg:h-96">
                 {STEPS.map((item, index) => {
                   const isActive = index === active;
                   const isDone = index < active;
@@ -159,7 +192,7 @@ export function StackGraph({ className }: { className?: string }) {
                         onClick={() => goToStep(index)}
                         aria-current={isActive ? "step" : undefined}
                         className={cn(
-                          "flex w-full items-start gap-3 py-3 pl-6 text-left transition-colors",
+                          "flex w-full items-start gap-3 py-2 pl-5 text-left transition-colors",
                           isActive
                             ? "text-foreground"
                             : "text-muted-foreground hover:text-foreground"
@@ -167,7 +200,7 @@ export function StackGraph({ className }: { className?: string }) {
                       >
                         <span
                           className={cn(
-                            "absolute left-0 top-4 flex h-2.5 w-2.5 -translate-x-1/2 rounded-full border-2 transition-colors",
+                            "absolute left-0 top-3.5 flex h-2 w-2 -translate-x-1/2 rounded-full border-2 transition-colors",
                             isActive || isDone
                               ? "border-accent-brand bg-accent-brand"
                               : "border-border bg-background"
@@ -180,7 +213,7 @@ export function StackGraph({ className }: { className?: string }) {
                           </span>
                           <span
                             className={cn(
-                              "mt-1 block text-sm font-medium leading-snug",
+                              "mt-0.5 block text-[13px] font-medium leading-snug",
                               isActive
                                 ? "text-foreground"
                                 : "text-muted-foreground"
@@ -195,18 +228,49 @@ export function StackGraph({ className }: { className?: string }) {
                 })}
               </ol>
 
-              <div className="flex min-h-[280px] flex-col">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent-brand">
-                  Step {active + 1} of {STEPS.length}
-                </p>
-                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-                  {step.title}
-                </h3>
-                <p className="mt-4 max-w-xl flex-1 text-base leading-relaxed text-muted-foreground">
-                  {step.body}
-                </p>
+              <div className="flex h-80 flex-col overflow-hidden rounded-md border border-border/40 bg-background/20 p-5 sm:p-6 lg:h-96">
+                <div className="shrink-0">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-brand">
+                    Step {active + 1} of {STEPS.length}
+                  </p>
+                  <h3 className="mt-2 line-clamp-2 text-xl font-semibold tracking-tight text-foreground md:text-2xl">
+                    {step.title}
+                  </h3>
+                </div>
 
-                <div className="mt-10 flex items-center justify-between gap-4 border-t border-border/50 pt-5">
+                <div className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1 scrollbar-thin">
+                  <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                    {step.body}
+                  </p>
+
+                  <ul className="mt-4 space-y-2 border-t border-border/40 pt-4">
+                    {step.points.map((point) => (
+                      <li
+                        key={point}
+                        className="flex gap-2.5 text-[13px] leading-relaxed text-foreground/90"
+                      >
+                        <span
+                          className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent-brand"
+                          aria-hidden
+                        />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-4 flex flex-wrap gap-1.5 pb-1">
+                    {step.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className="rounded-sm border border-border/50 bg-background/40 px-2 py-0.5 text-[11px] font-medium text-muted-foreground"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-3 flex shrink-0 items-center justify-between gap-4 border-t border-border/50 pt-4">
                   {prev ? (
                     <button
                       type="button"

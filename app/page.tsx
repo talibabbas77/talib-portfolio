@@ -6,6 +6,7 @@ import { GlobeReachSection } from "@/components/ui/cobe-globe";
 import { StackGraph } from "@/components/stack-graph";
 import { SkillsSection } from "@/components/skills-section";
 import { ServicesSection } from "@/components/services-section";
+import { HomeContactSection } from "@/components/home-contact-section";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <StackGraph />
       <SkillsSection />
       <ServicesSection />
+      <HomeContactSection />
     </>
   );
 }
