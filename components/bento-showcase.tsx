@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SoftReveal } from "@/components/motion/kino-root";
+import { SoftReveal } from "@/components/motion/soft-reveal";
 import { cn } from "@/lib/utils";
 
 const CELLS = [
@@ -44,7 +44,7 @@ export function BentoShowcase({ className }: { className?: string }) {
 
         <div className="mt-8 grid auto-rows-[minmax(140px,auto)] gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
           {CELLS.map((cell, i) => (
-            <SoftReveal key={cell.href} delay={i * 40}>
+            <SoftReveal key={cell.href} delay={i * 24}>
               <Link
                 href={cell.href}
                 className={cn(

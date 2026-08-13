@@ -318,13 +318,3 @@ export const ctaLabels = {
 
 export type { CaseStudy } from "@/lib/content/case-studies";
 export type { BlogPost } from "@/lib/content/blog-posts";
-export {
-  caseStudies,
-  getCaseStudy,
-  getCaseStudySlugs,
-} from "@/lib/content/case-studies";
-export {
-  blogPosts,
-  getBlogPost,
-  getBlogPostSlugs,
-} from "@/lib/content/blog-posts";

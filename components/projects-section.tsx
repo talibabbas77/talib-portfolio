@@ -12,7 +12,7 @@ export function ProjectsSection() {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    revealSection(ref.current);
+    return revealSection(ref.current);
   }, []);
 
   return (

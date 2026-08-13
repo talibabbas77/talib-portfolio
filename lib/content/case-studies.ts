@@ -1,5 +1,5 @@
 import { seedCaseStudies } from "@/lib/seed/case-studies";
-import { htmlToPlainParagraphs } from "@/lib/cms/sanitize";
+import { htmlToPlainParagraphs } from "@/lib/content/html-utils";
 
 export type CaseStudy = {
   slug: string;

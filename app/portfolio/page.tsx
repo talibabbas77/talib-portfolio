@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
-import { SoftReveal } from "@/components/motion/kino-root";
+import { SoftReveal } from "@/components/motion/soft-reveal";
 import { BentoShowcase } from "@/components/bento-showcase";
 import {
   ctaLabels,
@@ -46,7 +46,7 @@ export default function PortfolioPage() {
               : "/case-studies";
             return (
               <li key={project.id}>
-                <SoftReveal delay={i * 40}>
+                <SoftReveal delay={i * 24}>
                   <article className="overflow-hidden rounded-md border border-border/60 bg-background/60 backdrop-blur-sm transition-colors hover:border-accent-brand/40">
                     <Link
                       href={caseHref}

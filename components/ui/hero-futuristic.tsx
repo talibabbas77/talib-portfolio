@@ -17,12 +17,14 @@ import {
 import { GsapButton } from '@/components/ui/gsap-button';
 import { cn } from '@/lib/utils';
 
+import { scrollToTarget } from "@/lib/smooth-scroll";
+
 function scrollToId(id: string) {
-  if (id === 'home') {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (id === "home") {
+    scrollToTarget(0);
     return;
   }
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  scrollToTarget(`#${id}`, { offset: -88 });
 }
 
 const SOCIAL_ICONS = {

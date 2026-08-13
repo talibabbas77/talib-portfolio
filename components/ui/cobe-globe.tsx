@@ -4,7 +4,8 @@ import createGlobe from "cobe";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { prefersReducedMotion } from "@/lib/gsap";
-import { SoftReveal } from "@/components/motion/kino-root";
+import { GLOBAL_MARKERS } from "@/lib/content/global-markers";
+import { SoftReveal } from "@/components/motion/soft-reveal";
 import { cn } from "@/lib/utils";
 
 export type GlobeMarker = {
@@ -15,27 +16,14 @@ export type GlobeMarker = {
   size?: number;
 };
 
-/** Major markets + niches. First entry is home (Lahore). */
-export const DEFAULT_MARKERS: GlobeMarker[] = [
-  { id: "lahore", label: "Lahore", niche: "Home base", location: [31.5204, 74.3587], size: 0.08 },
-  { id: "karachi", label: "Karachi", niche: "Regional clients", location: [24.8607, 67.0011], size: 0.04 },
-  { id: "dubai", label: "Dubai", niche: "E-commerce & Shopify", location: [25.2048, 55.2708], size: 0.05 },
-  { id: "riyadh", label: "Riyadh", niche: "Product builds", location: [24.7136, 46.6753], size: 0.04 },
-  { id: "london", label: "London", niche: "Web apps & APIs", location: [51.5074, -0.1278], size: 0.05 },
-  { id: "berlin", label: "Berlin", niche: "Startups & MVPs", location: [52.52, 13.405], size: 0.04 },
-  { id: "amsterdam", label: "Amsterdam", niche: "SaaS teams", location: [52.3676, 4.9041], size: 0.04 },
-  { id: "paris", label: "Paris", niche: "Product UI", location: [48.8566, 2.3522], size: 0.04 },
-  { id: "nyc", label: "New York", niche: "SaaS & product", location: [40.7128, -74.006], size: 0.05 },
-  { id: "sf", label: "San Francisco", niche: "Product engineering", location: [37.7749, -122.4194], size: 0.05 },
-  { id: "toronto", label: "Toronto", niche: "CRM & automation", location: [43.6532, -79.3832], size: 0.045 },
-  { id: "chicago", label: "Chicago", niche: "Internal tools", location: [41.8781, -87.6298], size: 0.04 },
-  { id: "sao-paulo", label: "São Paulo", niche: "Marketplace work", location: [-23.5505, -46.6333], size: 0.04 },
-  { id: "singapore", label: "Singapore", niche: "AI integrations", location: [1.3521, 103.8198], size: 0.045 },
-  { id: "tokyo", label: "Tokyo", niche: "Web platforms", location: [35.6762, 139.6503], size: 0.04 },
-  { id: "sydney", label: "Sydney", niche: "Remote product work", location: [-33.8688, 151.2093], size: 0.04 },
-  { id: "mumbai", label: "Mumbai", niche: "Client delivery", location: [19.076, 72.8777], size: 0.04 },
-  { id: "lagos", label: "Lagos", niche: "Growth products", location: [6.5244, 3.3792], size: 0.04 },
-];
+/** Cobe uses [lat, lng]; shared source is [lng, lat]. */
+export const DEFAULT_MARKERS: GlobeMarker[] = GLOBAL_MARKERS.map((m) => ({
+  id: m.id,
+  label: m.label,
+  niche: m.niche,
+  location: [m.coordinates[1], m.coordinates[0]],
+  size: m.home ? 0.08 : 0.04,
+}));
 
 type CobeGlobeProps = {
   className?: string;
@@ -193,7 +181,7 @@ export function GlobeReachSection({ className }: { className?: string }) {
           </ul>
         </SoftReveal>
 
-        <SoftReveal delay={40}>
+        <SoftReveal delay={24}>
           <div className="flex justify-center bg-transparent p-2 sm:p-4">
             <CobeGlobe size={440} />
           </div>

@@ -14,7 +14,7 @@ export function ContactSection() {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    revealSection(ref.current);
+    return revealSection(ref.current);
   }, []);
 
   const channels = [

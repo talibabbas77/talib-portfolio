@@ -1,5 +1,5 @@
 import { seedBlogPosts } from "@/lib/seed/blog-posts";
-import { htmlToPlainParagraphs } from "@/lib/cms/sanitize";
+import { htmlToPlainParagraphs } from "@/lib/content/html-utils";
 
 export type BlogPost = {
   slug: string;

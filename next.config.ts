@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  transpilePackages: ["ogl"],
+  transpilePackages: ["ogl", "react-simple-maps"],
   serverExternalPackages: ["sanitize-html"],
   experimental: {
     optimizePackageImports: [

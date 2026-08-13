@@ -16,11 +16,14 @@ export function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-/** Fast, low-friction reveals so scrolling never feels blocked. */
+/**
+ * Section enter: one trigger per section, staggered children.
+ * Opacity 0 -> 1 only. No blur, no half-opacity states that read as "black text".
+ */
 export function revealSection(
   scope: HTMLElement | null,
   selector = "[data-reveal]"
-) {
+): (() => void) | undefined {
   if (!scope) return;
   registerGsap();
 
@@ -28,30 +31,32 @@ export function revealSection(
   if (!targets.length) return;
 
   if (prefersReducedMotion()) {
-    gsap.set(targets, { opacity: 1, y: 0, clearProps: "filter" });
+    gsap.set(targets, { opacity: 1, y: 0, clearProps: "all" });
     return;
   }
 
-  gsap.fromTo(
-    targets,
-    { opacity: 0.35, y: 12 },
-    {
+  gsap.set(targets, { opacity: 0, y: 20 });
+
+  const ctx = gsap.context(() => {
+    gsap.to(targets, {
       opacity: 1,
       y: 0,
-      duration: 0.35,
-      stagger: 0.03,
-      ease: "power2.out",
+      duration: 0.55,
+      stagger: 0.07,
+      ease: "power3.out",
       scrollTrigger: {
         trigger: scope,
-        start: "top 92%",
+        start: "top 86%",
         once: true,
         toggleActions: "play none none none",
       },
       onComplete: () => {
         gsap.set(targets, { clearProps: "transform,opacity" });
       },
-    }
-  );
+    });
+  }, scope);
+
+  return () => ctx.revert();
 }
 
 export { gsap, ScrollTrigger };

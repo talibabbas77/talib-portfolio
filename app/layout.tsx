@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ConditionalBackground } from "@/components/conditional-background";
 import { SiteChrome } from "@/components/site-chrome";
 import { SiteToaster } from "@/components/site-toaster";
-import { KinoRoot } from "@/components/motion/kino-root";
+import { LenisProvider } from "@/components/motion/lenis-provider";
 import { siteConfig, socialLinks } from "@/lib/site-content";
 
 const ubuntu = Ubuntu({
@@ -121,8 +121,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${ubuntu.variable} ${ebGaramond.variable} scroll-smooth`}
-      data-scroll-behavior="smooth"
+      className={`${ubuntu.variable} ${ebGaramond.variable}`}
     >
       <body className="font-sans antialiased" suppressHydrationWarning>
         <script
@@ -137,9 +136,9 @@ export default function RootLayout({
           storageKey="talib-portfolio-theme"
         >
           <ConditionalBackground />
-          <KinoRoot>
+          <LenisProvider>
             <SiteChrome>{children}</SiteChrome>
-          </KinoRoot>
+          </LenisProvider>
           <SiteToaster />
         </ThemeProvider>
       </body>

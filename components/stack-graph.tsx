@@ -2,12 +2,13 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { SoftReveal } from "@/components/motion/kino-root";
+import { SoftReveal } from "@/components/motion/soft-reveal";
 import {
   prefersReducedMotion,
   registerGsap,
   ScrollTrigger,
 } from "@/lib/gsap";
+import { scrollToTarget } from "@/lib/smooth-scroll";
 import { cn } from "@/lib/utils";
 
 const STEPS = [
@@ -158,7 +159,7 @@ export function StackGraph({ className }: { className?: string }) {
 
     const progress = LAST === 0 ? 0 : clamped / LAST;
     const y = st.start + (st.end - st.start) * progress;
-    window.scrollTo({ top: y, behavior: "smooth" });
+    scrollToTarget(y);
   };
 
   return (
@@ -179,7 +180,7 @@ export function StackGraph({ className }: { className?: string }) {
             </p>
           </SoftReveal>
 
-          <SoftReveal delay={40}>
+          <SoftReveal delay={24}>
             <div className="mt-6 space-y-4 lg:space-y-0 lg:grid lg:items-start lg:gap-10 lg:grid-cols-[11rem_1fr] xl:grid-cols-[13rem_1fr]">
               <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 scrollbar-thin lg:hidden">
                 {STEPS.map((item, index) => {

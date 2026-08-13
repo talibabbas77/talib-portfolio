@@ -14,6 +14,7 @@ import {
 } from "@/lib/site-content";
 import { GsapButton } from "@/components/ui/gsap-button";
 import { NewsletterSubscribeForm } from "@/components/newsletter-subscribe-form";
+import { scrollToTarget } from "@/lib/smooth-scroll";
 import { cn } from "@/lib/utils";
 
 const SOCIAL_ICONS = {
@@ -36,7 +37,7 @@ export function Footer() {
 
   const goHomeTop = () => {
     if (pathname === "/") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      scrollToTarget(0);
       return;
     }
     router.push("/");

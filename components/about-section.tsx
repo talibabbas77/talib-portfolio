@@ -8,7 +8,7 @@ export function AboutSection() {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    revealSection(ref.current);
+    return revealSection(ref.current);
   }, []);
 
   return (

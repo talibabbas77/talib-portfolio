@@ -68,10 +68,10 @@ export function Navbar() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "inline-flex h-8 items-center rounded-md px-2.5 text-[12px] font-bold transition-all duration-200 xl:px-3.5 xl:text-[13px]",
+                      "inline-flex h-8 items-center rounded-md px-2.5 text-[12px] font-bold transition-colors duration-200 xl:px-3.5 xl:text-[13px]",
                       active
-                        ? "bg-foreground text-background shadow-sm"
-                        : "text-foreground/70 hover:bg-foreground/6 hover:text-foreground"
+                        ? "bg-accent-brand/14 text-accent-brand ring-1 ring-accent-brand/30"
+                        : "text-muted-foreground hover:bg-foreground/6 hover:text-foreground"
                     )}
                   >
                     {item.name}
@@ -119,8 +119,8 @@ export function Navbar() {
                     className={cn(
                       "block w-full rounded-lg px-4 py-3 text-left text-sm font-bold",
                       active
-                        ? "bg-accent-brand/15 text-foreground"
-                        : "text-foreground/80 hover:bg-foreground/6 hover:text-foreground"
+                        ? "bg-accent-brand/14 text-accent-brand"
+                        : "text-muted-foreground hover:bg-foreground/6 hover:text-foreground"
                     )}
                   >
                     {item.name}

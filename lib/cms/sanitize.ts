@@ -1,5 +1,7 @@
 import sanitizeHtmlLib from "sanitize-html";
 
+export { paragraphsToHtml, htmlToPlainParagraphs } from "@/lib/content/html-utils";
+
 const SANITIZE_OPTIONS: sanitizeHtmlLib.IOptions = {
   allowedTags: [
     "p",
@@ -32,25 +34,4 @@ const SANITIZE_OPTIONS: sanitizeHtmlLib.IOptions = {
 export function sanitizeHtml(html: string) {
   if (!html) return "";
   return sanitizeHtmlLib(html, SANITIZE_OPTIONS);
-}
-
-export function paragraphsToHtml(paragraphs: string[]) {
-  return paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join("");
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
-
-export function htmlToPlainParagraphs(html: string) {
-  const text = html
-    .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<\/p>/gi, "\n\n")
-    .replace(/<[^>]+>/g, "")
-    .trim();
-  return text.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
 }
