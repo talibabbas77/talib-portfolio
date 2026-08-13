@@ -1,8 +1,9 @@
+import { unstable_cache } from "next/cache";
 import { blogPosts as staticPosts } from "@/lib/content/blog-posts";
 import { paragraphsToHtml, sanitizeHtml } from "@/lib/cms/sanitize";
 import type { BlogPostRow } from "@/lib/cms/types";
-import { createClient } from "@/lib/supabase/server";
-import { canPersistSubmissions } from "@/lib/supabase/admin";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 
 export type PublicBlogPost = {
   slug: string;
@@ -18,27 +19,31 @@ export type PublicBlogPost = {
   coverImageUrl?: string | null;
 };
 
-function mapRow(row: BlogPostRow): PublicBlogPost {
-  const safeHtml = sanitizeHtml(row.content_html || "");
-  return {
-    slug: row.slug,
-    title: row.title,
-    kicker: row.kicker,
-    summary: row.summary,
-    date: row.published_at ?? row.created_at.slice(0, 10),
-    readTime: row.read_time,
-    featured: row.featured,
-    tags: row.tags ?? [],
-    contentHtml: safeHtml,
-    coverImageUrl: row.cover_image_url,
-    body: safeHtml
-      .replace(/<br\s*\/?>/gi, "\n")
-      .replace(/<\/p>/gi, "\n\n")
-      .replace(/<[^>]+>/g, "")
-      .split(/\n{2,}/)
-      .map((p) => p.trim())
-      .filter(Boolean),
-  };
+function mapRow(row: BlogPostRow): PublicBlogPost | null {
+  try {
+    const safeHtml = sanitizeHtml(row.content_html || "");
+    return {
+      slug: row.slug,
+      title: row.title,
+      kicker: row.kicker,
+      summary: row.summary,
+      date: row.published_at ?? row.created_at.slice(0, 10),
+      readTime: row.read_time,
+      featured: row.featured,
+      tags: row.tags ?? [],
+      contentHtml: safeHtml,
+      coverImageUrl: row.cover_image_url,
+      body: safeHtml
+        .replace(/<br\s*\/?>/gi, "\n")
+        .replace(/<\/p>/gi, "\n\n")
+        .replace(/<[^>]+>/g, "")
+        .split(/\n{2,}/)
+        .map((p) => p.trim())
+        .filter(Boolean),
+    };
+  } catch {
+    return null;
+  }
 }
 
 function mapStatic(post: (typeof staticPosts)[number]): PublicBlogPost {
@@ -50,13 +55,17 @@ function mapStatic(post: (typeof staticPosts)[number]): PublicBlogPost {
   };
 }
 
-export async function getPublishedBlogPosts(): Promise<PublicBlogPost[]> {
-  if (!canPersistSubmissions()) {
+async function fetchPublishedBlogPosts(): Promise<PublicBlogPost[]> {
+  if (!isSupabaseConfigured()) {
     return staticPosts.map(mapStatic);
   }
 
   try {
-    const supabase = await createClient();
+    const supabase = createPublicClient();
+    if (!supabase) {
+      return staticPosts.map(mapStatic);
+    }
+
     const { data, error } = await supabase
       .from("blog_posts")
       .select("*")
@@ -67,10 +76,24 @@ export async function getPublishedBlogPosts(): Promise<PublicBlogPost[]> {
       return staticPosts.map(mapStatic);
     }
 
-    return (data as BlogPostRow[]).map(mapRow);
+    const mapped = (data as BlogPostRow[])
+      .map(mapRow)
+      .filter((post): post is PublicBlogPost => post !== null);
+
+    return mapped.length ? mapped : staticPosts.map(mapStatic);
   } catch {
     return staticPosts.map(mapStatic);
   }
+}
+
+const getCachedPublishedBlogPosts = unstable_cache(
+  fetchPublishedBlogPosts,
+  ["published-blog-posts"],
+  { revalidate: 60, tags: ["blog-posts"] }
+);
+
+export async function getPublishedBlogPosts(): Promise<PublicBlogPost[]> {
+  return getCachedPublishedBlogPosts();
 }
 
 export async function getPublishedBlogPost(slug: string) {

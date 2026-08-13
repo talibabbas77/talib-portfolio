@@ -1,9 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-/** Kept inline so contact routes never pull Supabase into the middleware bundle. */
+/** Kept inline so contact routes never pull Supabase into the proxy bundle. */
 const CONTACT_GATE_COOKIE = "contact_verified";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith("/admin")) {

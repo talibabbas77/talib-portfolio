@@ -1,9 +1,37 @@
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtmlLib from "sanitize-html";
+
+const SANITIZE_OPTIONS: sanitizeHtmlLib.IOptions = {
+  allowedTags: [
+    "p",
+    "br",
+    "strong",
+    "em",
+    "u",
+    "h2",
+    "h3",
+    "h4",
+    "ul",
+    "ol",
+    "li",
+    "a",
+    "blockquote",
+    "code",
+    "pre",
+    "img",
+  ],
+  allowedAttributes: {
+    a: ["href", "title", "target", "rel"],
+    img: ["src", "alt", "title", "width", "height"],
+  },
+  allowedSchemes: ["http", "https", "mailto"],
+  transformTags: {
+    a: sanitizeHtmlLib.simpleTransform("a", { rel: "noopener noreferrer" }),
+  },
+};
 
 export function sanitizeHtml(html: string) {
-  return DOMPurify.sanitize(html, {
-    USE_PROFILES: { html: true },
-  });
+  if (!html) return "";
+  return sanitizeHtmlLib(html, SANITIZE_OPTIONS);
 }
 
 export function paragraphsToHtml(paragraphs: string[]) {

@@ -14,6 +14,14 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   transpilePackages: ["ogl"],
+  serverExternalPackages: ["sanitize-html"],
+  experimental: {
+    optimizePackageImports: [
+      "@phosphor-icons/react",
+      "lucide-react",
+      "react-icons",
+    ],
+  },
 };
 
 export default nextConfig;
